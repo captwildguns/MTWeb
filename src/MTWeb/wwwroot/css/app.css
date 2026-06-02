@@ -46,3 +46,18 @@
     font: var(--forge-typography-body2);
     color: var(--forge-theme-text-medium);
 }
+
+.field-row-indent {
+    padding-left: 40px;
+}
+
+.field-row-indent2 {
+    padding-left: 80px;
+}
+
+.field-note {
+    font: var(--forge-typography-body2);
+    color: var(--forge-theme-text-medium);
+    padding: var(--forge-spacing-xsmall) 0;
+    font-style: italic;
+}

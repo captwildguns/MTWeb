@@ -1,65 +1,23 @@
-﻿@using MTWeb.Pages.TylerDrive.Setup.Tabs
-
-<ForgeForm @ref="_form" Model="_model">
-    <div class="setup-section">
-        <div class="field-row">
-            <label>Enable Timekeeping</label>
-            <ForgeSwitch @bind-Value="_model.EnableTimekeeping" Label="Enable" />
-        </div>
-    </div>
-
-    @if (_model.EnableTimekeeping)
+﻿<ForgeForm @ref="_form" Model="_model">
+    <div class="field-row"><label>Timekeeping</label><ForgeRadioGroup @bind-Value="_model.TimekeepingEnabled"><ForgeRadio Value="true">Enabled</ForgeRadio><ForgeRadio Value="false">Disabled</ForgeRadio></ForgeRadioGroup></div>
+    @if (_model.TimekeepingEnabled)
     {
-        <div class="setup-section">
-            <ForgeText Typography="Typography.Heading6" class="mb-small">Punch Settings</ForgeText>
-
-            <div class="field-row">
-                <label>Mandatory Punch</label>
-                <ForgeSwitch @bind-Value="_model.MandatoryPunch" Label="Required" />
-            </div>
-            <div class="field-row">
-                <label>Punch In Buffer (minutes)</label>
-                <ForgeNumberField @bind-Value="_model.PunchInBufferMinutes"
-                                  Label="Minutes"
-                                  Min="0" Max="100"
-                                  FloatLabelType="FloatLabelType.Always" />
-            </div>
-            <div class="field-row">
-                <label>Punch Out Buffer (minutes)</label>
-                <ForgeNumberField @bind-Value="_model.PunchOutBufferMinutes"
-                                  Label="Minutes"
-                                  Min="0" Max="100"
-                                  FloatLabelType="FloatLabelType.Always" />
-            </div>
-        </div>
-
-        <div class="setup-section">
-            <ForgeText Typography="Typography.Heading6" class="mb-small">Break Time</ForgeText>
-
-            <div class="field-row">
-                <label>Break Time</label>
-                <ForgeSelect @bind-Value="_model.BreakTime" Label="Break Time" FloatLabelType="FloatLabelType.Always">
-                    <ForgeSelectOption Value="@("Off")">Off</ForgeSelectOption>
-                    <ForgeSelectOption Value="@("On")">On</ForgeSelectOption>
-                </ForgeSelect>
-            </div>
+        <div class="field-row-indent" style="padding-top:4px"><ForgeCheckbox @bind-Value="_model.MandatoryPunchIn" Label="Mandatory Punch In" /></div>
+        <div class="field-row field-row-indent"><label>Clock In Buffer</label><span style="display:flex;align-items:center;gap:8px"><ForgeNumberField @bind-Value="_model.ClockInBufferMinutes" FloatLabelType="FloatLabelType.Never" Min="0" style="width:80px" /><span>minutes</span></span></div>
+        <div class="field-row field-row-indent"><label>Clock Out Buffer</label><span style="display:flex;align-items:center;gap:8px"><ForgeNumberField @bind-Value="_model.ClockOutBufferMinutes" FloatLabelType="FloatLabelType.Never" Min="0" style="width:80px" /><span>minutes</span></span></div>
+        <div class="field-row field-row-indent">
+            <label>Break Time</label>
+            <ForgeSelect @bind-Value="_model.BreakTime" FloatLabelType="FloatLabelType.Never" style="width:160px">
+                <ForgeSelectOption Value="@("Off")">Off</ForgeSelectOption>
+                <ForgeSelectOption Value="@("On")">On</ForgeSelectOption>
+            </ForgeSelect>
         </div>
     }
-
-    <div class="setup-actions">
-        <StxButton Intent="StxButtonIntent.Save" OnClick="HandleSave" />
-    </div>
+    <div class="setup-actions"><StxButton Intent="StxButtonIntent.Save" OnClick="HandleSave" /></div>
 </ForgeForm>
 
 @code {
     private readonly TimeTrackingSetupModel _model = new();
     private ForgeForm? _form;
-
-    private async Task HandleSave()
-    {
-        // TODO: POST to /TylerDrive/Setup/UpdateTimeConfig
-        await Task.CompletedTask;
-    }
+    private async Task HandleSave() { await Task.CompletedTask; }
 }
-
-

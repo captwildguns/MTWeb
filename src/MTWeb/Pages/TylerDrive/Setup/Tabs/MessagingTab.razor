@@ -1,130 +1,61 @@
-﻿@using MTWeb.Pages.TylerDrive.Setup.Tabs
-
-<ForgeForm @ref="_form" Model="_model">
-    <div class="setup-section">
-        <ForgeText Typography="Typography.Heading6" class="mb-small">Messaging Mode</ForgeText>
-
-        <div class="field-row">
-            <label>Messaging Mode</label>
-            <ForgeSelect @bind-Value="_model.MessagingMode" Label="Mode" FloatLabelType="FloatLabelType.Always">
-                <ForgeSelectOption Value="@("Off")">Off</ForgeSelectOption>
-                <ForgeSelectOption Value="@("OneWay")">One-Way</ForgeSelectOption>
-                <ForgeSelectOption Value="@("TwoWay")">Two-Way</ForgeSelectOption>
-            </ForgeSelect>
-        </div>
-
-        <div class="field-row">
-            <label>Days of History</label>
-            <ForgeSelect @bind-Value="_model.DaysOfHistory" Label="Days" FloatLabelType="FloatLabelType.Always">
-                @for (int i = 0; i <= 23; i++)
-                {
-                    var days = i;
-                    <ForgeSelectOption Value="@days">@days day@(days == 1 ? "" : "s")</ForgeSelectOption>
-                }
-            </ForgeSelect>
-        </div>
+﻿<ForgeForm @ref="_form" Model="_model">
+    <div class="field-row">
+        <label>Messaging</label>
+        <ForgeSelect @bind-Value="_model.MessagingMode" FloatLabelType="FloatLabelType.Never" style="width:160px">
+            <ForgeSelectOption Value="@("Off")">Off</ForgeSelectOption>
+            <ForgeSelectOption Value="@("OneWay")">One-Way</ForgeSelectOption>
+            <ForgeSelectOption Value="@("TwoWay")">Two-Way</ForgeSelectOption>
+        </ForgeSelect>
     </div>
-
     @if (_model.MessagingMode != "Off")
     {
-        <div class="setup-section">
-            <ForgeText Typography="Typography.Heading6" class="mb-small">Response Options</ForgeText>
-
-            <div class="field-row">
-                <label>Allow Canned Responses</label>
-                <ForgeSwitch @bind-Value="_model.AllowCannedResponses" Label="Enable" />
-            </div>
-            <div class="field-row">
-                <label>Allow Keyboard Responses</label>
-                <ForgeSwitch @bind-Value="_model.AllowKeyboardResponses" Label="Enable" />
-            </div>
+        <div class="field-row">
+            <label>Show</label>
+            <span style="display:flex;align-items:center;gap:8px">
+                <ForgeSelect @bind-Value="_model.DaysOfHistory" FloatLabelType="FloatLabelType.Never" style="width:80px">
+                    @for (int i = 0; i <= 30; i++) { var d = i; <ForgeSelectOption Value="@d">@d</ForgeSelectOption> }
+                </ForgeSelect>
+                <span>days of history</span>
+            </span>
         </div>
-
-        @if (_model.AllowCannedResponses)
+        <div style="padding:6px 0 2px"><span>Response Types</span></div>
+        <div class="field-row-indent"><ForgeCheckbox @bind-Value="_model.AllowKeyboard" Label="Keyboard" /></div>
+        <div class="field-row-indent"><ForgeCheckbox @bind-Value="_model.AllowCanned" Label="Canned" /></div>
+        @if (_model.AllowCanned)
         {
-            <div class="setup-section">
-                <div style="display:flex; justify-content:space-between; align-items:center;" class="mb-small">
-                    <ForgeText Typography="Typography.Heading6">Canned Responses</ForgeText>
-                    <StxButton Intent="StxButtonIntent.Add" OnClick="AddCannedResponse" />
-                </div>
-
-                @if (_model.CannedResponses.Count == 0)
-                {
-                    <ForgeInlineMessage Theme="ForgeInlineMessageTheme.Info">
-                        No canned responses defined. Click Add to create one.
-                    </ForgeInlineMessage>
-                }
-                else
-                {
-                    @foreach (var (response, index) in _model.CannedResponses.Select((r, i) => (r, i)))
+            <div style="display:flex;align-items:center;gap:6px;padding:8px 0 4px 40px" @onclick="AddCannedResponse" role="button" style="cursor:pointer">
+                <forge-icon-button aria-label="Add"><ForgeIcon Icon="ForgeIcons.Add" /></forge-icon-button>
+                <span>Add a Canned Response</span>
+            </div>
+            @if (_model.CannedResponses.Count > 0)
+            {
+                <div style="padding-left:40px;max-width:480px">
+                    <div style="display:grid;grid-template-columns:1fr auto;padding:4px 0;border-bottom:1px solid var(--forge-theme-border-low);margin-bottom:4px">
+                        <span>Response</span><span>Delete</span>
+                    </div>
+                    @foreach (var (r, i) in _model.CannedResponses.Select((r, i) => (r, i)))
                     {
-                        <div style="display:flex; gap:var(--forge-spacing-small); align-items:center; margin-bottom:var(--forge-spacing-small);">
-                            <ForgeTextField @bind-Value="response.Text"
-                                            Label="Response text"
-                                            FloatLabelType="FloatLabelType.Always"
-                                            style="flex:1" />
-                            <forge-icon-button aria-label="Move up"
-                                               disabled="@(index == 0)"
-                                               @onclick="() => MoveUp(index)">
-                                <ForgeIcon Icon="ForgeIcons.ArrowUpward" />
-                            </forge-icon-button>
-                            <forge-icon-button aria-label="Move down"
-                                               disabled="@(index == _model.CannedResponses.Count - 1)"
-                                               @onclick="() => MoveDown(index)">
-                                <ForgeIcon Icon="ForgeIcons.ArrowDownward" />
-                            </forge-icon-button>
-                            <forge-icon-button aria-label="Remove" @onclick="() => RemoveCannedResponse(index)">
-                                <ForgeIcon Icon="ForgeIcons.Delete" />
-                            </forge-icon-button>
+                        <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">
+                            <ForgeTextField @bind-Value="r.Text" FloatLabelType="FloatLabelType.Never" style="flex:1" />
+                            @if (i > 0) { <forge-icon-button aria-label="Up" @onclick="() => MoveUp(i)"><ForgeIcon Icon="ForgeIcons.ArrowUpward" /></forge-icon-button> }
+                            @if (i < _model.CannedResponses.Count - 1) { <forge-icon-button aria-label="Down" @onclick="() => MoveDown(i)"><ForgeIcon Icon="ForgeIcons.ArrowDownward" /></forge-icon-button> }
+                            <forge-icon-button aria-label="Delete" @onclick="() => Delete(i)"><ForgeIcon Icon="ForgeIcons.Close" /></forge-icon-button>
                         </div>
                     }
-                }
-            </div>
+                </div>
+            }
         }
     }
-
-    <div class="setup-actions">
-        <StxButton Intent="StxButtonIntent.Save" OnClick="HandleSave" />
-    </div>
+    <div class="setup-actions"><StxButton Intent="StxButtonIntent.Save" OnClick="HandleSave" /></div>
 </ForgeForm>
 
 @code {
     private readonly MessagingSetupModel _model = new();
     private ForgeForm? _form;
     private int _nextId = 1;
-
-    private void AddCannedResponse()
-    {
-        _model.CannedResponses.Add(new CannedResponseModel
-        {
-            Id = _nextId++,
-            Sequence = _model.CannedResponses.Count + 1
-        });
-    }
-
-    private void RemoveCannedResponse(int index) =>
-        _model.CannedResponses.RemoveAt(index);
-
-    private void MoveUp(int index)
-    {
-        if (index <= 0) return;
-        (_model.CannedResponses[index], _model.CannedResponses[index - 1]) =
-            (_model.CannedResponses[index - 1], _model.CannedResponses[index]);
-    }
-
-    private void MoveDown(int index)
-    {
-        if (index >= _model.CannedResponses.Count - 1) return;
-        (_model.CannedResponses[index], _model.CannedResponses[index + 1]) =
-            (_model.CannedResponses[index + 1], _model.CannedResponses[index]);
-    }
-
-    private async Task HandleSave()
-    {
-        // TODO: POST to /api/cannedresponse/ and /TylerDrive/Setup/UpdateMessagingConfig
-        await Task.CompletedTask;
-    }
+    private void AddCannedResponse() => _model.CannedResponses.Add(new CannedResponseModel { Id = _nextId++, Sequence = _model.CannedResponses.Count + 1 });
+    private void Delete(int i) => _model.CannedResponses.RemoveAt(i);
+    private void MoveUp(int i) { if (i > 0) (_model.CannedResponses[i], _model.CannedResponses[i-1]) = (_model.CannedResponses[i-1], _model.CannedResponses[i]); }
+    private void MoveDown(int i) { if (i < _model.CannedResponses.Count-1) (_model.CannedResponses[i], _model.CannedResponses[i+1]) = (_model.CannedResponses[i+1], _model.CannedResponses[i]); }
+    private async Task HandleSave() { await Task.CompletedTask; }
 }
-
-
-

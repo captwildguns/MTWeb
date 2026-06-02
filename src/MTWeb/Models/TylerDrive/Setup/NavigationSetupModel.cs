@@ -2,41 +2,35 @@ namespace MTWeb.Models.TylerDrive.Setup;
 
 public class NavigationSetupModel
 {
-    // Basic navigation
-    public bool EnableTodaysRuns { get; set; } = true;
-    public bool EnableStartNavigation { get; set; } = true;
-    public bool AllowTrips { get; set; }
-    public bool ShowNextStopEta { get; set; }
-    public bool RequireTripCompletionData { get; set; }
-    public bool RequireRunSignature { get; set; }
-
-    // Auto rollout
-    public bool EnableAutoRollout { get; set; }
+    // My Runs
+    public bool MyRunsEnabled { get; set; } = true;
+    public bool NavigationEnabled { get; set; } = true;
+    public bool ShowNextStopEta { get; set; } = true;
+    public bool AllowTrips { get; set; } = true;
+    public bool CaptureTripCompletionData { get; set; } = true;
+    public bool RequireEndOfRunSignature { get; set; } = true;
+    public bool AutoRolloutEnabled { get; set; } = true;
+    public string AddRunSearchType { get; set; } = "Both";
 
     // AVL
-    public bool EnableAvl { get; set; }
-    public bool EventOnlyAvl { get; set; }
-    public int AvlIntervalSeconds { get; set; } = 30;
-    public int AvlStopIntervalSeconds { get; set; } = 10;
-    public int AvlEarlyAlertMinutes { get; set; } = 5;
-    public int AvlLateAlertMinutes { get; set; } = 5;
-    public int StopArrivalThresholdFeet { get; set; } = 100;
-    public bool ShowStopOnTime { get; set; }
+    public bool AvlEnabled { get; set; } = true;
+    public bool AvlEventsOnly { get; set; }
+    public int AvlStopEventIntervalSeconds { get; set; } = 10;
+    public int SpeedingBufferMph { get; set; }
+    public int LateAlertThresholdMinutes { get; set; }
+    public int EarlyAlertThresholdMinutes { get; set; }
 
-    // Road Along
-    public bool RoadAlongAllStops { get; set; } = true;
-    public bool RoadAlongCurbToCurb { get; set; }
-    public int RoadAlongStreetBufferFeet { get; set; } = 50;
-    public int RoadAlongBeforeBufferFeet { get; set; } = 50;
-    public int RoadAlongAfterBufferFeet { get; set; } = 50;
-
-    // Speed
-    public int SpeedingBufferMph { get; set; } = 5;
-
-    // Modify stops
+    // Modify Stops
     public bool ModifyStopsRequirePlannedRoute { get; set; }
-    public bool AllowModifyStopsDuringNavigation { get; set; }
+    public bool ModifyStopsAllowDuringNavigation { get; set; } = true;
+    public bool ModifyStopsEnableAddByAddress { get; set; } = true;
 
-    // ETA notifications
-    public bool EnableEtaNotifications { get; set; }
+    // Additional Stop Buffer
+    public bool AdditionalStopBufferAllStops { get; set; } = true;
+    public int AdditionalStopBufferBeforeFeet { get; set; } = 400;
+    public int AdditionalStopBufferAfterFeet { get; set; } = 400;
+    public int AdditionalStopBufferFromRoadFeet { get; set; } = 20;
+
+    // ETA
+    public bool EnableEtaSystemNotifications { get; set; } = true;
 }

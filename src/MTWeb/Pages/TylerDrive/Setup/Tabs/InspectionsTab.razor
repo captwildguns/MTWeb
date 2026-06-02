@@ -1,99 +1,62 @@
-﻿@using MTWeb.Pages.TylerDrive.Setup.Tabs
-
-<ForgeForm @ref="_form" Model="_model">
-    <div class="setup-section">
-        <div class="field-row">
-            <label>Enable Field Inspections</label>
-            <ForgeSwitch @bind-Value="_model.EnableFieldInspections" Label="Enable" />
-        </div>
+﻿<ForgeForm @ref="_form" Model="_model">
+    <div class="field-row">
+        <label>Field Inspections</label>
+        <ForgeRadioGroup @bind-Value="_model.FieldInspectionsEnabled">
+            <ForgeRadio Value="true">Enabled</ForgeRadio>
+            <ForgeRadio Value="false">Disabled</ForgeRadio>
+        </ForgeRadioGroup>
     </div>
 
-    @if (_model.EnableFieldInspections)
+    @if (_model.FieldInspectionsEnabled)
     {
-        <div class="setup-section">
-            <ForgeText Typography="Typography.Heading6" class="mb-small">Signature &amp; Notes</ForgeText>
+        <div class="field-row field-row-indent"><ForgeCheckbox @bind-Value="_model.SignatureOnFail" Label="Signature On Fail" /></div>
+        <div class="field-row field-row-indent"><ForgeCheckbox @bind-Value="_model.SignatureOnPass" Label="Signature On Pass" /></div>
+        <div class="field-row field-row-indent"><ForgeCheckbox @bind-Value="_model.UpdateOdometer" Label="Update Odometer" /></div>
+        <div class="field-row field-row-indent"><ForgeCheckbox @bind-Value="_model.SingleDefectSelection" Label="Single Defect Selection" /></div>
+        <div class="field-row field-row-indent"><ForgeCheckbox @bind-Value="_model.EnableWorkOrderVerification" Label="Enable Work Order Verification" /></div>
+        <div class="field-row field-row-indent"><ForgeCheckbox @bind-Value="_model.HideVehiclesWithOpenWorkOrders" Label="Hide Vehicles With Open Work Orders" /></div>
+    }
 
-            <div class="field-row">
-                <label>Signature on Fail</label>
-                <ForgeSwitch @bind-Value="_model.SignatureOnFail" Label="Required" />
-            </div>
-            <div class="field-row">
-                <label>Signature on Pass</label>
-                <ForgeSwitch @bind-Value="_model.SignatureOnPass" Label="Required" />
-            </div>
-            <div class="field-row">
-                <label>Notes on Fail</label>
-                <ForgeSwitch @bind-Value="_model.NotesOnFail" Label="Required" />
-            </div>
-            <div class="field-row">
-                <label>Notes on Critical</label>
-                <ForgeSwitch @bind-Value="_model.NotesOnCritical" Label="Required" />
-            </div>
+    <div class="field-row">
+        <label>Notes On Fail</label>
+        <ForgeSelect @bind-Value="_model.NotesOnFail" FloatLabelType="FloatLabelType.Never" style="width:160px">
+            <ForgeSelectOption Value="@("Off")">Off</ForgeSelectOption>
+            <ForgeSelectOption Value="@("Prompt")">Prompt</ForgeSelectOption>
+            <ForgeSelectOption Value="@("Require")">Require</ForgeSelectOption>
+        </ForgeSelect>
+    </div>
+    <div class="field-row">
+        <label>Notes On Critical</label>
+        <ForgeSelect @bind-Value="_model.NotesOnCritical" FloatLabelType="FloatLabelType.Never" style="width:160px">
+            <ForgeSelectOption Value="@("Off")">Off</ForgeSelectOption>
+            <ForgeSelectOption Value="@("Prompt")">Prompt</ForgeSelectOption>
+            <ForgeSelectOption Value="@("Require")">Require</ForgeSelectOption>
+        </ForgeSelect>
+    </div>
+    <div class="field-row">
+        <label>Odometer Warning</label>
+        <ForgeRadioGroup @bind-Value="_model.OdometerWarningEnabled">
+            <ForgeRadio Value="true">Enabled</ForgeRadio>
+            <ForgeRadio Value="false">Disabled</ForgeRadio>
+        </ForgeRadioGroup>
+    </div>
+    @if (_model.OdometerWarningEnabled)
+    {
+        <div class="field-row field-row-indent">
+            <label>Warning Threshold</label>
+            <span style="display:flex;align-items:center;gap:8px"><ForgeNumberField @bind-Value="_model.OdometerWarningThreshold" FloatLabelType="FloatLabelType.Never" Min="0" Max="100" style="width:80px" /><span>%</span></span>
         </div>
-
-        <div class="setup-section">
-            <ForgeText Typography="Typography.Heading6" class="mb-small">Vehicle &amp; Work Orders</ForgeText>
-
-            <div class="field-row">
-                <label>Update Odometer</label>
-                <ForgeSwitch @bind-Value="_model.UpdateOdometer" Label="Enable" />
-            </div>
-            <div class="field-row">
-                <label>Enforce Single Defect</label>
-                <ForgeSwitch @bind-Value="_model.EnforceSingleDefect" Label="Enable" />
-            </div>
-            <div class="field-row">
-                <label>Enable Work Order Verification</label>
-                <ForgeSwitch @bind-Value="_model.EnableWorkOrderVerification" Label="Enable" />
-            </div>
-            <div class="field-row">
-                <label>Hide Vehicles with Open Work Orders</label>
-                <ForgeSwitch @bind-Value="_model.HideVehiclesWithOpenWorkOrders" Label="Enable" />
-            </div>
-        </div>
-
-        <div class="setup-section">
-            <ForgeText Typography="Typography.Heading6" class="mb-small">Odometer Warning</ForgeText>
-
-            <div class="field-row">
-                <label>Enable Odometer Warning</label>
-                <ForgeSwitch @bind-Value="_model.EnableOdometerWarning" Label="Enable" />
-            </div>
-
-            @if (_model.EnableOdometerWarning)
-            {
-                <div class="field-row">
-                    <label>Warning Threshold (%)</label>
-                    <ForgeNumberField @bind-Value="_model.OdometerWarningThreshold"
-                                      Label="Threshold"
-                                      Min="0" Max="100"
-                                      FloatLabelType="FloatLabelType.Always" />
-                </div>
-                <div class="field-row">
-                    <label>Minimum Units</label>
-                    <ForgeNumberField @bind-Value="_model.OdometerWarningMinimumUnits"
-                                      Label="Units"
-                                      Min="0" Max="1000"
-                                      FloatLabelType="FloatLabelType.Always" />
-                </div>
-            }
+        <div class="field-row field-row-indent">
+            <label>Minimum Units</label>
+            <ForgeNumberField @bind-Value="_model.OdometerWarningMinimumUnits" FloatLabelType="FloatLabelType.Never" Min="0" style="width:80px" />
         </div>
     }
 
-    <div class="setup-actions">
-        <StxButton Intent="StxButtonIntent.Save" OnClick="HandleSave" />
-    </div>
+    <div class="setup-actions"><StxButton Intent="StxButtonIntent.Save" OnClick="HandleSave" /></div>
 </ForgeForm>
 
 @code {
     private readonly InspectionsSetupModel _model = new();
     private ForgeForm? _form;
-
-    private async Task HandleSave()
-    {
-        // TODO: POST to /TylerDrive/Setup/UpdateInspectionsConfig
-        await Task.CompletedTask;
-    }
+    private async Task HandleSave() { await Task.CompletedTask; }
 }
-
-

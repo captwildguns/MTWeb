@@ -1,133 +1,48 @@
-﻿@using MTWeb.Pages.TylerDrive.Setup.Tabs
+﻿<ForgeForm @ref="_form" Model="_model">
+    <div class="field-row"><label>My Runs</label><ForgeRadioGroup @bind-Value="_model.MyRunsEnabled"><ForgeRadio Value="true">Enabled</ForgeRadio><ForgeRadio Value="false">Disabled</ForgeRadio></ForgeRadioGroup></div>
+    <div class="field-row field-row-indent"><label>Navigation</label><ForgeRadioGroup @bind-Value="_model.NavigationEnabled"><ForgeRadio Value="true">Enabled</ForgeRadio><ForgeRadio Value="false">Disabled</ForgeRadio></ForgeRadioGroup></div>
+    <div class="field-row field-row-indent"><label>Show Next Stop Eta</label><ForgeRadioGroup @bind-Value="_model.ShowNextStopEta"><ForgeRadio Value="true">Enabled</ForgeRadio><ForgeRadio Value="false">Disabled</ForgeRadio></ForgeRadioGroup></div>
+    <div class="field-row field-row-indent"><label>Allow Trips</label><ForgeRadioGroup @bind-Value="_model.AllowTrips"><ForgeRadio Value="true">Enabled</ForgeRadio><ForgeRadio Value="false">Disabled</ForgeRadio></ForgeRadioGroup></div>
+    <div class="field-row field-row-indent2"><label>Capture Trip Completion Data</label><ForgeRadioGroup @bind-Value="_model.CaptureTripCompletionData"><ForgeRadio Value="true">Enabled</ForgeRadio><ForgeRadio Value="false">Disabled</ForgeRadio></ForgeRadioGroup></div>
+    <div class="field-row field-row-indent"><label>Require End of Run Signature</label><ForgeRadioGroup @bind-Value="_model.RequireEndOfRunSignature"><ForgeRadio Value="true">Enabled</ForgeRadio><ForgeRadio Value="false">Disabled</ForgeRadio></ForgeRadioGroup></div>
+    <div class="field-row field-row-indent"><label>Auto Rollout</label><ForgeRadioGroup @bind-Value="_model.AutoRolloutEnabled"><ForgeRadio Value="true">Enabled</ForgeRadio><ForgeRadio Value="false">Disabled</ForgeRadio></ForgeRadioGroup></div>
+    @if (_model.AutoRolloutEnabled) { <div class="field-note field-row-indent2">By enabling Auto Rollout for Tyler Drive, existing forms of auto rollout will be disabled.</div> }
 
-<ForgeForm @ref="_form" Model="_model">
-    <div class="setup-section">
-        <ForgeText Typography="Typography.Heading6" class="mb-small">Basic Navigation</ForgeText>
-
-        <div class="field-row"><label>Enable Today's Runs</label><ForgeSwitch @bind-Value="_model.EnableTodaysRuns" Label="Enable" /></div>
-        <div class="field-row"><label>Enable Start Navigation</label><ForgeSwitch @bind-Value="_model.EnableStartNavigation" Label="Enable" /></div>
-        <div class="field-row"><label>Allow Trips</label><ForgeSwitch @bind-Value="_model.AllowTrips" Label="Enable" /></div>
-        <div class="field-row"><label>Show Next Stop ETA</label><ForgeSwitch @bind-Value="_model.ShowNextStopEta" Label="Show" /></div>
-        <div class="field-row"><label>Require Run Signature</label><ForgeSwitch @bind-Value="_model.RequireRunSignature" Label="Required" /></div>
-
-        @if (_model.AllowTrips)
-        {
-            <div class="field-row">
-                <label>Require Trip Completion Data</label>
-                <ForgeSwitch @bind-Value="_model.RequireTripCompletionData" Label="Required" />
-            </div>
-        }
+    <div class="field-row">
+        <label>Add Run Search Type</label>
+        <ForgeSelect @bind-Value="_model.AddRunSearchType" FloatLabelType="FloatLabelType.Never" style="width:160px">
+            <ForgeSelectOption Value="@("Both")">Both</ForgeSelectOption>
+            <ForgeSelectOption Value="@("ByName")">By Name</ForgeSelectOption>
+            <ForgeSelectOption Value="@("ByNumber")">By Number</ForgeSelectOption>
+        </ForgeSelect>
     </div>
 
-    <div class="setup-section">
-        <ForgeText Typography="Typography.Heading6" class="mb-small">Auto Rollout</ForgeText>
+    <div class="field-row"><label>AVL</label><ForgeRadioGroup @bind-Value="_model.AvlEnabled"><ForgeRadio Value="true">Enabled</ForgeRadio><ForgeRadio Value="false">Disabled</ForgeRadio></ForgeRadioGroup></div>
+    <div class="field-row field-row-indent"><label>Events Only</label><ForgeRadioGroup @bind-Value="_model.AvlEventsOnly"><ForgeRadio Value="true">Enabled</ForgeRadio><ForgeRadio Value="false">Disabled</ForgeRadio></ForgeRadioGroup></div>
+    <div class="field-row field-row-indent"><label>AVL Stop Event Interval</label><span style="display:flex;align-items:center;gap:8px"><ForgeNumberField @bind-Value="_model.AvlStopEventIntervalSeconds" FloatLabelType="FloatLabelType.Never" Min="0" style="width:80px" /><span>seconds</span></span></div>
+    <div class="field-row field-row-indent"><label>Speeding Buffer</label><span style="display:flex;align-items:center;gap:8px"><ForgeNumberField @bind-Value="_model.SpeedingBufferMph" FloatLabelType="FloatLabelType.Never" Min="0" style="width:80px" /><span>mile(s) per hour</span></span></div>
+    <div class="field-row field-row-indent"><label>Late Alert Threshold</label><span style="display:flex;align-items:center;gap:8px"><ForgeNumberField @bind-Value="_model.LateAlertThresholdMinutes" FloatLabelType="FloatLabelType.Never" Min="0" style="width:80px" /><span>minutes</span></span></div>
+    <div class="field-row field-row-indent"><label>Early Alert Threshold</label><span style="display:flex;align-items:center;gap:8px"><ForgeNumberField @bind-Value="_model.EarlyAlertThresholdMinutes" FloatLabelType="FloatLabelType.Never" Min="0" style="width:80px" /><span>minutes</span></span></div>
 
-        <div class="field-row">
-            <label>Enable Auto Rollout</label>
-            <ForgeSwitch @bind-Value="_model.EnableAutoRollout" Label="Enable" />
-        </div>
+    <div class="field-row"><label>Modify Stops</label></div>
+    <div class="field-row field-row-indent"><label>Require Planned Route</label><ForgeRadioGroup @bind-Value="_model.ModifyStopsRequirePlannedRoute"><ForgeRadio Value="true">Enabled</ForgeRadio><ForgeRadio Value="false">Disabled</ForgeRadio></ForgeRadioGroup></div>
+    <div class="field-row field-row-indent"><label>Allow During Navigation</label><ForgeRadioGroup @bind-Value="_model.ModifyStopsAllowDuringNavigation"><ForgeRadio Value="true">Enabled</ForgeRadio><ForgeRadio Value="false">Disabled</ForgeRadio></ForgeRadioGroup></div>
+    <div class="field-row field-row-indent"><label>Enable Add By Address</label><ForgeRadioGroup @bind-Value="_model.ModifyStopsEnableAddByAddress"><ForgeRadio Value="true">Enabled</ForgeRadio><ForgeRadio Value="false">Disabled</ForgeRadio></ForgeRadioGroup></div>
 
-        @if (_model.EnableAutoRollout)
-        {
-            <ForgeInlineMessage Theme="ForgeInlineMessageTheme.Warning" class="mt-small">
-                Enabling Auto Rollout will disable any non-Tyler Drive auto rollout configurations.
-            </ForgeInlineMessage>
-        }
-    </div>
+    <div class="field-row"><label>Additional Stop Buffer</label></div>
+    <div class="field-row field-row-indent"><label>All Stops</label><ForgeRadioGroup @bind-Value="_model.AdditionalStopBufferAllStops"><ForgeRadio Value="true">Enabled</ForgeRadio><ForgeRadio Value="false">Disabled</ForgeRadio></ForgeRadioGroup></div>
+    <div class="field-row field-row-indent"><label>Before Stop</label><span style="display:flex;align-items:center;gap:8px"><ForgeNumberField @bind-Value="_model.AdditionalStopBufferBeforeFeet" FloatLabelType="FloatLabelType.Never" Min="0" style="width:80px" /><span>feet</span></span></div>
+    <div class="field-row field-row-indent"><label>After Stop</label><span style="display:flex;align-items:center;gap:8px"><ForgeNumberField @bind-Value="_model.AdditionalStopBufferAfterFeet" FloatLabelType="FloatLabelType.Never" Min="0" style="width:80px" /><span>feet</span></span></div>
+    <div class="field-row field-row-indent"><label>From Road</label><span style="display:flex;align-items:center;gap:8px"><ForgeNumberField @bind-Value="_model.AdditionalStopBufferFromRoadFeet" FloatLabelType="FloatLabelType.Never" Min="0" style="width:80px" /><span>feet</span></span></div>
 
-    <div class="setup-section">
-        <ForgeText Typography="Typography.Heading6" class="mb-small">AVL (Automatic Vehicle Location)</ForgeText>
+    <div class="field-row"><label>Enable ETA System Notifications</label><ForgeRadioGroup @bind-Value="_model.EnableEtaSystemNotifications"><ForgeRadio Value="true">Enabled</ForgeRadio><ForgeRadio Value="false">Disabled</ForgeRadio></ForgeRadioGroup></div>
+    <div class="field-note">ETA System Notifications are required for other parts of the system to work, such as My Ride K-12 ETA Notifications and Arrival Board</div>
 
-        <div class="field-row"><label>Enable AVL</label><ForgeSwitch @bind-Value="_model.EnableAvl" Label="Enable" /></div>
-
-        @if (_model.EnableAvl)
-        {
-            <div class="field-row"><label>Event Only AVL</label><ForgeSwitch @bind-Value="_model.EventOnlyAvl" Label="Enable" /></div>
-            <div class="field-row">
-                <label>AVL Interval (seconds)</label>
-                <ForgeNumberField @bind-Value="_model.AvlIntervalSeconds" Label="Seconds" Min="1" FloatLabelType="FloatLabelType.Always" />
-            </div>
-            <div class="field-row">
-                <label>AVL Stop Interval (seconds)</label>
-                <ForgeNumberField @bind-Value="_model.AvlStopIntervalSeconds" Label="Seconds" Min="1" FloatLabelType="FloatLabelType.Always" />
-            </div>
-            <div class="field-row">
-                <label>Early Alert Threshold (minutes)</label>
-                <ForgeNumberField @bind-Value="_model.AvlEarlyAlertMinutes" Label="Minutes" Min="0" FloatLabelType="FloatLabelType.Always" />
-            </div>
-            <div class="field-row">
-                <label>Late Alert Threshold (minutes)</label>
-                <ForgeNumberField @bind-Value="_model.AvlLateAlertMinutes" Label="Minutes" Min="0" FloatLabelType="FloatLabelType.Always" />
-            </div>
-            <div class="field-row">
-                <label>Stop Arrival Threshold (feet)</label>
-                <ForgeNumberField @bind-Value="_model.StopArrivalThresholdFeet" Label="Feet" Min="0" FloatLabelType="FloatLabelType.Always" />
-            </div>
-            <div class="field-row"><label>Show Stop On Time</label><ForgeSwitch @bind-Value="_model.ShowStopOnTime" Label="Show" /></div>
-        }
-    </div>
-
-    <div class="setup-section">
-        <ForgeText Typography="Typography.Heading6" class="mb-small">Road Along</ForgeText>
-
-        <div class="field-row">
-            <label>Road Along Mode</label>
-            <ForgeRadioGroup @bind-Value="_roadAlongMode">
-                <ForgeRadio Value="@("AllStops")">All Stops</ForgeRadio>
-                <ForgeRadio Value="@("CurbToCurb")">Curb to Curb</ForgeRadio>
-            </ForgeRadioGroup>
-        </div>
-        <div class="field-row">
-            <label>Street Buffer (feet)</label>
-            <ForgeNumberField @bind-Value="_model.RoadAlongStreetBufferFeet" Label="Feet" Min="0" FloatLabelType="FloatLabelType.Always" />
-        </div>
-        <div class="field-row">
-            <label>Before Buffer (feet)</label>
-            <ForgeNumberField @bind-Value="_model.RoadAlongBeforeBufferFeet" Label="Feet" Min="0" FloatLabelType="FloatLabelType.Always" />
-        </div>
-        <div class="field-row">
-            <label>After Buffer (feet)</label>
-            <ForgeNumberField @bind-Value="_model.RoadAlongAfterBufferFeet" Label="Feet" Min="0" FloatLabelType="FloatLabelType.Always" />
-        </div>
-    </div>
-
-    <div class="setup-section">
-        <ForgeText Typography="Typography.Heading6" class="mb-small">Speed &amp; Stops</ForgeText>
-
-        <div class="field-row">
-            <label>Speeding Buffer (mph)</label>
-            <ForgeNumberField @bind-Value="_model.SpeedingBufferMph" Label="MPH" Min="0" FloatLabelType="FloatLabelType.Always" />
-        </div>
-        <div class="field-row"><label>Modify Stops: Require Planned Route</label><ForgeSwitch @bind-Value="_model.ModifyStopsRequirePlannedRoute" Label="Required" /></div>
-        <div class="field-row"><label>Allow Modify Stops During Navigation</label><ForgeSwitch @bind-Value="_model.AllowModifyStopsDuringNavigation" Label="Allow" /></div>
-        <div class="field-row"><label>Enable ETA Notifications</label><ForgeSwitch @bind-Value="_model.EnableEtaNotifications" Label="Enable" /></div>
-    </div>
-
-    <div class="setup-actions">
-        <StxButton Intent="StxButtonIntent.Save" OnClick="HandleSave" />
-    </div>
+    <div class="setup-actions"><StxButton Intent="StxButtonIntent.Save" OnClick="HandleSave" /></div>
 </ForgeForm>
 
 @code {
     private readonly NavigationSetupModel _model = new();
     private ForgeForm? _form;
-
-    private string _roadAlongMode
-    {
-        get => _model.RoadAlongAllStops ? "AllStops" : "CurbToCurb";
-        set
-        {
-            _model.RoadAlongAllStops = value == "AllStops";
-            _model.RoadAlongCurbToCurb = value == "CurbToCurb";
-        }
-    }
-
-    private async Task HandleSave()
-    {
-        // TODO: POST to /TylerDrive/Setup/UpdateDriveConfig
-        await Task.CompletedTask;
-    }
+    private async Task HandleSave() { await Task.CompletedTask; }
 }
-
-
-
