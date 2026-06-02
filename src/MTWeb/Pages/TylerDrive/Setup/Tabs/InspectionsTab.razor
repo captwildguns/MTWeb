@@ -9,12 +9,12 @@
 
     @if (_model.FieldInspectionsEnabled)
     {
-        <div class="field-row field-row-indent"><ForgeCheckbox @bind-Value="_model.SignatureOnFail" Label="Signature On Fail" /></div>
-        <div class="field-row field-row-indent"><ForgeCheckbox @bind-Value="_model.SignatureOnPass" Label="Signature On Pass" /></div>
-        <div class="field-row field-row-indent"><ForgeCheckbox @bind-Value="_model.UpdateOdometer" Label="Update Odometer" /></div>
-        <div class="field-row field-row-indent"><ForgeCheckbox @bind-Value="_model.SingleDefectSelection" Label="Single Defect Selection" /></div>
-        <div class="field-row field-row-indent"><ForgeCheckbox @bind-Value="_model.EnableWorkOrderVerification" Label="Enable Work Order Verification" /></div>
-        <div class="field-row field-row-indent"><ForgeCheckbox @bind-Value="_model.HideVehiclesWithOpenWorkOrders" Label="Hide Vehicles With Open Work Orders" /></div>
+        <div class="field-row field-row-indent"><ForgeCheckbox @bind-Value="_model.SignatureOnFail">Signature On Fail</ForgeCheckbox></div>
+        <div class="field-row field-row-indent"><ForgeCheckbox @bind-Value="_model.SignatureOnPass">Signature On Pass</ForgeCheckbox></div>
+        <div class="field-row field-row-indent"><ForgeCheckbox @bind-Value="_model.UpdateOdometer">Update Odometer</ForgeCheckbox></div>
+        <div class="field-row field-row-indent"><ForgeCheckbox @bind-Value="_model.SingleDefectSelection">Single Defect Selection</ForgeCheckbox></div>
+        <div class="field-row field-row-indent"><ForgeCheckbox @bind-Value="_model.EnableWorkOrderVerification">Enable Work Order Verification</ForgeCheckbox></div>
+        <div class="field-row field-row-indent"><ForgeCheckbox @bind-Value="_model.HideVehiclesWithOpenWorkOrders">Hide Vehicles With Open Work Orders</ForgeCheckbox></div>
     }
 
     <div class="field-row">
@@ -60,4 +60,5 @@
     private ForgeForm? _form;
     private async Task HandleSave() { await Task.CompletedTask; }
 }
+
 

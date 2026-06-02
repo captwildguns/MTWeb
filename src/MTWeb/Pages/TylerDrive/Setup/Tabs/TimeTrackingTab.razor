@@ -1,8 +1,16 @@
 ﻿<ForgeForm @ref="_form" Model="_model">
-    <div class="field-row"><label>Timekeeping</label><ForgeRadioGroup @bind-Value="_model.TimekeepingEnabled"><ForgeRadio Value="@true">Enabled</ForgeRadio><ForgeRadio Value="@false">Disabled</ForgeRadio></ForgeRadioGroup></div>
+    <div class="field-row">
+        <label>Timekeeping</label>
+        <ForgeRadioGroup @bind-Value="_timekeeping">
+            <ForgeRadio Value="Enabled">Enabled</ForgeRadio>
+            <ForgeRadio Value="Disabled">Disabled</ForgeRadio>
+        </ForgeRadioGroup>
+    </div>
     @if (_model.TimekeepingEnabled)
     {
-        <div class="field-row-indent" style="padding-top:4px"><ForgeCheckbox @bind-Value="_model.MandatoryPunchIn" Label="Mandatory Punch In" /></div>
+        <div class="field-row-indent" style="padding-top:4px">
+            <ForgeCheckbox @bind-Value="_model.MandatoryPunchIn">Mandatory Punch In</ForgeCheckbox>
+        </div>
         <div class="field-row field-row-indent">
             <label>Clock In Buffer</label>
             <span style="display:flex;align-items:center;gap:8px">
@@ -37,6 +45,12 @@
         BreakTime = "Off"
     };
     private ForgeForm? _form;
+
+    private string _timekeeping
+    {
+        get => _model.TimekeepingEnabled ? "Enabled" : "Disabled";
+        set => _model.TimekeepingEnabled = value == "Enabled";
+    }
+
     private async Task HandleSave() { await Task.CompletedTask; }
 }
-

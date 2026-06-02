@@ -19,8 +19,8 @@
             </span>
         </div>
         <div style="padding:6px 0 2px"><span>Response Types</span></div>
-        <div class="field-row-indent"><ForgeCheckbox @bind-Value="_model.AllowKeyboard" Label="Keyboard" /></div>
-        <div class="field-row-indent"><ForgeCheckbox @bind-Value="_model.AllowCanned" Label="Canned" /></div>
+        <div class="field-row-indent"><ForgeCheckbox @bind-Value="_model.AllowKeyboard">Keyboard</ForgeCheckbox></div>
+        <div class="field-row-indent"><ForgeCheckbox @bind-Value="_model.AllowCanned">Canned</ForgeCheckbox></div>
         @if (_model.AllowCanned)
         {
             <div style="display:flex;align-items:center;gap:6px;padding:8px 0 4px 40px;cursor:pointer" @onclick="AddCannedResponse" role="button">
@@ -59,4 +59,5 @@
     private void MoveDown(int i) { if (i < _model.CannedResponses.Count-1) (_model.CannedResponses[i], _model.CannedResponses[i+1]) = (_model.CannedResponses[i+1], _model.CannedResponses[i]); }
     private async Task HandleSave() { await Task.CompletedTask; }
 }
+
 
