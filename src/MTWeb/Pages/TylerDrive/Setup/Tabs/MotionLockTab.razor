@@ -77,7 +77,6 @@
 
     <div class="setup-actions">
         <StxButton Intent="StxButtonIntent.Save" OnClick="HandleSave" />
-        <StxButton Intent="StxButtonIntent.Cancel" OnClick="HandleCancel" />
     </div>
 </ForgeForm>
 
@@ -90,7 +89,6 @@
         // TODO: POST to /TylerDrive/Setup/UpdateMotionLockConfig
         await Task.CompletedTask;
     }
-
-    private void HandleCancel() { }
 }
+
 

@@ -85,7 +85,6 @@
 
     <div class="setup-actions">
         <StxButton Intent="StxButtonIntent.Save" OnClick="HandleSave" />
-        <StxButton Intent="StxButtonIntent.Cancel" OnClick="HandleCancel" />
     </div>
 </ForgeForm>
 
@@ -125,8 +124,7 @@
         // TODO: POST to /api/cannedresponse/ and /TylerDrive/Setup/UpdateMessagingConfig
         await Task.CompletedTask;
     }
-
-    private void HandleCancel() { }
 }
+
 
 
