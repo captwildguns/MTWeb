@@ -25,20 +25,10 @@ jobs:
         with:
           dotnet-version: "10.0.x"
 
-      - name: Configure Artifactory credentials
-        run: |
-          dotnet nuget update source Artifactory \
-            --username "${{ secrets.ARTIFACTORY_USERNAME }}" \
-            --password "${{ secrets.ARTIFACTORY_PASSWORD }}" \
-            --store-password-in-clear-text \
-            --configfile nuget.config
-          dotnet nuget update source ArtifactoryLGD \
-            --username "${{ secrets.ARTIFACTORY_USERNAME }}" \
-            --password "${{ secrets.ARTIFACTORY_PASSWORD }}" \
-            --store-password-in-clear-text \
-            --configfile nuget.config
-
       - name: Publish
+        env:
+          NuGetPackageSourceCredentials_Artifactory: "Username=${{ secrets.ARTIFACTORY_USERNAME }};Password=${{ secrets.ARTIFACTORY_PASSWORD }};ValidAuthenticationTypes=Basic"
+          NuGetPackageSourceCredentials_ArtifactoryLGD: "Username=${{ secrets.ARTIFACTORY_USERNAME }};Password=${{ secrets.ARTIFACTORY_PASSWORD }};ValidAuthenticationTypes=Basic"
         run: dotnet publish src/MTWeb/MTWeb.csproj -c Release -o publish
 
       - name: Fix base href for GitHub Pages subpath
