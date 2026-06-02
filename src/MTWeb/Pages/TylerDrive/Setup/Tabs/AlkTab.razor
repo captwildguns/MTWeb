@@ -1,6 +1,6 @@
-@using MTWeb.Pages.TylerDrive.Setup.Tabs
+﻿@using MTWeb.Pages.TylerDrive.Setup.Tabs
 
-<ForgeForm @ref="_form">
+<ForgeForm @ref="_form" Model="_model">
     <div class="setup-section">
         <ForgeText Typography="Typography.Heading6" class="mb-small">Cellular Data</ForgeText>
 
@@ -161,3 +161,4 @@
 
     private void HandleCancel() { }
 }
+

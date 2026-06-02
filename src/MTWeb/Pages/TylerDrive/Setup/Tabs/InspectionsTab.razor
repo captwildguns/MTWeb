@@ -1,6 +1,6 @@
-@using MTWeb.Pages.TylerDrive.Setup.Tabs
+﻿@using MTWeb.Pages.TylerDrive.Setup.Tabs
 
-<ForgeForm @ref="_form">
+<ForgeForm @ref="_form" Model="_model">
     <div class="setup-section">
         <div class="field-row">
             <label>Enable Field Inspections</label>
@@ -98,3 +98,4 @@
 
     private void HandleCancel() { }
 }
+

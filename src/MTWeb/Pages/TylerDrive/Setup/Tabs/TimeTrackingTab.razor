@@ -1,6 +1,6 @@
-@using MTWeb.Pages.TylerDrive.Setup.Tabs
+﻿@using MTWeb.Pages.TylerDrive.Setup.Tabs
 
-<ForgeForm @ref="_form">
+<ForgeForm @ref="_form" Model="_model">
     <div class="setup-section">
         <div class="field-row">
             <label>Enable Timekeeping</label>
@@ -64,3 +64,4 @@
 
     private void HandleCancel() { }
 }
+
