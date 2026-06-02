@@ -1,12 +1,10 @@
 ﻿<ForgeForm @ref="_form" Model="_model">
     <div class="field-row">
         <label>Field Inspections</label>
-        <ForgeRadioGroup @bind-Value="_model.FieldInspectionsEnabled">
-            <ForgeRadio Value="@true">Enabled</ForgeRadio>
-            <ForgeRadio Value="@false">Disabled</ForgeRadio>
+        <ForgeRadioGroup Value="@ED(_model.FieldInspectionsEnabled)" ValueChanged="@((string v) => _model.FieldInspectionsEnabled = v == "Enabled")">
+            <ForgeRadio Value="Enabled">Enabled</ForgeRadio><ForgeRadio Value="Disabled">Disabled</ForgeRadio>
         </ForgeRadioGroup>
     </div>
-
     @if (_model.FieldInspectionsEnabled)
     {
         <div class="field-row field-row-indent"><ForgeCheckbox @bind-Value="_model.SignatureOnFail">Signature On Fail</ForgeCheckbox></div>
@@ -16,7 +14,6 @@
         <div class="field-row field-row-indent"><ForgeCheckbox @bind-Value="_model.EnableWorkOrderVerification">Enable Work Order Verification</ForgeCheckbox></div>
         <div class="field-row field-row-indent"><ForgeCheckbox @bind-Value="_model.HideVehiclesWithOpenWorkOrders">Hide Vehicles With Open Work Orders</ForgeCheckbox></div>
     }
-
     <div class="field-row">
         <label>Notes On Fail</label>
         <ForgeSelect @bind-Value="_model.NotesOnFail" FloatLabelType="FloatLabelType.Never" style="width:160px">
@@ -35,9 +32,8 @@
     </div>
     <div class="field-row">
         <label>Odometer Warning</label>
-        <ForgeRadioGroup @bind-Value="_model.OdometerWarningEnabled">
-            <ForgeRadio Value="@true">Enabled</ForgeRadio>
-            <ForgeRadio Value="@false">Disabled</ForgeRadio>
+        <ForgeRadioGroup Value="@ED(_model.OdometerWarningEnabled)" ValueChanged="@((string v) => _model.OdometerWarningEnabled = v == "Enabled")">
+            <ForgeRadio Value="Enabled">Enabled</ForgeRadio><ForgeRadio Value="Disabled">Disabled</ForgeRadio>
         </ForgeRadioGroup>
     </div>
     @if (_model.OdometerWarningEnabled)
@@ -51,14 +47,11 @@
             <ForgeNumberField @bind-Value="_model.OdometerWarningMinimumUnits" FloatLabelType="FloatLabelType.Never" Min="0" style="width:80px" />
         </div>
     }
-
     <div class="setup-actions"><StxButton Intent="StxButtonIntent.Save" OnClick="HandleSave" /></div>
 </ForgeForm>
-
 @code {
     private readonly InspectionsSetupModel _model = new();
     private ForgeForm? _form;
+    private static string ED(bool v) => v ? "Enabled" : "Disabled";
     private async Task HandleSave() { await Task.CompletedTask; }
 }
-
-

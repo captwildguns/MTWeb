@@ -1,12 +1,10 @@
 ﻿<ForgeForm @ref="_form" Model="_model">
     <div class="field-row">
         <label>Map Updates</label>
-        <ForgeRadioGroup @bind-Value="_model.MapUpdatesEnabled">
-            <ForgeRadio Value="@true">Enabled</ForgeRadio>
-            <ForgeRadio Value="@false">Disabled</ForgeRadio>
+        <ForgeRadioGroup Value="@ED(_model.MapUpdatesEnabled)" ValueChanged="@((string v) => _model.MapUpdatesEnabled = v == "Enabled")">
+            <ForgeRadio Value="Enabled">Enabled</ForgeRadio><ForgeRadio Value="Disabled">Disabled</ForgeRadio>
         </ForgeRadioGroup>
     </div>
-
     <div class="field-row">
         <label>Login Type</label>
         <ForgeSelect @bind-Value="_model.LoginType" FloatLabelType="FloatLabelType.Never" style="width:200px">
@@ -17,40 +15,24 @@
             <ForgeSelectOption Value="@("EmployeeIdAndPin")">Employee ID and PIN</ForgeSelectOption>
         </ForgeSelect>
     </div>
-
     <div class="field-row">
         <label>Auto Logout</label>
-        <ForgeRadioGroup @bind-Value="_model.AutoLogoutEnabled">
-            <ForgeRadio Value="@true">Enabled</ForgeRadio>
-            <ForgeRadio Value="@false">Disabled</ForgeRadio>
+        <ForgeRadioGroup Value="@ED(_model.AutoLogoutEnabled)" ValueChanged="@((string v) => _model.AutoLogoutEnabled = v == "Enabled")">
+            <ForgeRadio Value="Enabled">Enabled</ForgeRadio><ForgeRadio Value="Disabled">Disabled</ForgeRadio>
         </ForgeRadioGroup>
     </div>
-
     @if (_model.AutoLogoutEnabled)
     {
-        <div class="field-row">
+        <div class="field-row field-row-indent">
             <label>Auto Logout Time (minutes)</label>
-            <ForgeNumberField @bind-Value="_model.AutoLogoutMinutes"
-                              FloatLabelType="FloatLabelType.Never"
-                              Min="1" Max="1000"
-                              style="width:100px" />
+            <ForgeNumberField @bind-Value="_model.AutoLogoutMinutes" FloatLabelType="FloatLabelType.Never" Min="1" Max="1000" style="width:80px" />
         </div>
     }
-
-    <div class="setup-actions">
-        <StxButton Intent="StxButtonIntent.Save" OnClick="HandleSave" />
-    </div>
+    <div class="setup-actions"><StxButton Intent="StxButtonIntent.Save" OnClick="HandleSave" /></div>
 </ForgeForm>
-
 @code {
     private readonly GeneralSetupModel _model = new();
     private ForgeForm? _form;
-
-    private async Task HandleSave()
-    {
-        // TODO: POST to /TylerDrive/Setup/UpdateGeneralConfig
-        await Task.CompletedTask;
-    }
+    private static string ED(bool v) => v ? "Enabled" : "Disabled";
+    private async Task HandleSave() { await Task.CompletedTask; }
 }
-
-
