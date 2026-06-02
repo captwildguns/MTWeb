@@ -25,10 +25,48 @@ jobs:
         with:
           dotnet-version: "10.0.x"
 
-      - name: Publish
+      - name: Write NuGet credentials
+        run: |
+          cat > nuget.config << 'EOF'
+          <?xml version="1.0" encoding="utf-8"?>
+          <configuration>
+            <packageSources>
+              <add key="nuget.org"      value="https://api.nuget.org/v3/index.json" />
+              <add key="Artifactory"    value="https://tylertech.jfrog.io/artifactory/api/nuget/v3/nuget/index.json" />
+              <add key="ArtifactoryLGD" value="https://tylertech.jfrog.io/artifactory/api/nuget/v3/lgd-nuget-local/index.json" />
+            </packageSources>
+            <packageSourceCredentials>
+              <Artifactory>
+                <add key="Username"          value="TOKEN_USER" />
+                <add key="ClearTextPassword" value="TOKEN_PASS" />
+              </Artifactory>
+              <ArtifactoryLGD>
+                <add key="Username"          value="TOKEN_USER" />
+                <add key="ClearTextPassword" value="TOKEN_PASS" />
+              </ArtifactoryLGD>
+            </packageSourceCredentials>
+            <packageSourceMapping>
+              <packageSource key="Artifactory">
+                <package pattern="Tyler.*" />
+                <package pattern="TylerForge*" />
+                <package pattern="Traversa.*" />
+              </packageSource>
+              <packageSource key="ArtifactoryLGD">
+                <package pattern="TylerTechnologies.*" />
+              </packageSource>
+              <packageSource key="nuget.org">
+                <package pattern="*" />
+              </packageSource>
+            </packageSourceMapping>
+          </configuration>
+          EOF
+          sed -i "s|TOKEN_USER|$ARTIFACTORY_USERNAME|g" nuget.config
+          sed -i "s|TOKEN_PASS|$ARTIFACTORY_TOKEN|g"    nuget.config
         env:
-          NuGetPackageSourceCredentials_Artifactory: "Username=${{ secrets.ARTIFACTORY_USERNAME }};Password=${{ secrets.ARTIFACTORY_PASSWORD }};ValidAuthenticationTypes=Basic"
-          NuGetPackageSourceCredentials_ArtifactoryLGD: "Username=${{ secrets.ARTIFACTORY_USERNAME }};Password=${{ secrets.ARTIFACTORY_PASSWORD }};ValidAuthenticationTypes=Basic"
+          ARTIFACTORY_USERNAME: ${{ secrets.ARTIFACTORY_USERNAME }}
+          ARTIFACTORY_TOKEN:    ${{ secrets.ARTIFACTORY_TOKEN }}
+
+      - name: Publish
         run: dotnet publish src/MTWeb/MTWeb.csproj -c Release -o publish
 
       - name: Fix base href for GitHub Pages subpath
