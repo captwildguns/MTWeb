@@ -1,0 +1,64 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Configure Artifactory credentials
+        run: |
+          dotnet nuget update source Artifactory \
+            --username "${{ secrets.ARTIFACTORY_USERNAME }}" \
+            --password "${{ secrets.ARTIFACTORY_PASSWORD }}" \
+            --store-password-in-clear-text \
+            --configfile nuget.config
+          dotnet nuget update source ArtifactoryLGD \
+            --username "${{ secrets.ARTIFACTORY_USERNAME }}" \
+            --password "${{ secrets.ARTIFACTORY_PASSWORD }}" \
+            --store-password-in-clear-text \
+            --configfile nuget.config
+
+      - name: Publish
+        run: dotnet publish src/MTWeb/MTWeb.csproj -c Release -o publish
+
+      - name: Fix base href for GitHub Pages subpath
+        run: sed -i 's|<base href="/" />|<base href="/MTWeb/" />|g' publish/wwwroot/index.html
+
+      - name: Add .nojekyll
+        run: touch publish/wwwroot/.nojekyll
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: publish/wwwroot
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

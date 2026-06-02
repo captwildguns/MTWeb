@@ -9,6 +9,16 @@
     <link rel="stylesheet" href="_content/TylerTechnologies.Transportation.Components/forge-tailwind.css" />
     <link rel="stylesheet" href="css/app.css" />
     <script type="importmap"></script>
+    <script>
+        // Restore path redirected through 404.html for GitHub Pages SPA routing
+        (function() {
+            var p = window.location.search.slice(1).split('&').filter(function(s) { return s.startsWith('p='); })[0];
+            if (p) {
+                var path = p.slice(2).replace(/~and~/g, '&');
+                window.history.replaceState(null, null, '/' + (window.location.pathname.split('/')[1] || '') + '/' + path + window.location.hash);
+            }
+        })();
+    </script>
 </head>
 <body>
     <div id="app">
