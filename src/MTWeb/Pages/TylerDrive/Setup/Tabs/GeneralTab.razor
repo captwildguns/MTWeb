@@ -1,9 +1,9 @@
-<ForgeForm @ref="_form" Model="_model">
+﻿<ForgeForm @ref="_form" Model="_model">
     <div class="field-row">
         <label>Map Updates</label>
         <ForgeRadioGroup @bind-Value="_model.MapUpdatesEnabled">
-            <ForgeRadio Value="true">Enabled</ForgeRadio>
-            <ForgeRadio Value="false">Disabled</ForgeRadio>
+            <ForgeRadio Value="@true">Enabled</ForgeRadio>
+            <ForgeRadio Value="@false">Disabled</ForgeRadio>
         </ForgeRadioGroup>
     </div>
 
@@ -21,8 +21,8 @@
     <div class="field-row">
         <label>Auto Logout</label>
         <ForgeRadioGroup @bind-Value="_model.AutoLogoutEnabled">
-            <ForgeRadio Value="true">Enabled</ForgeRadio>
-            <ForgeRadio Value="false">Disabled</ForgeRadio>
+            <ForgeRadio Value="@true">Enabled</ForgeRadio>
+            <ForgeRadio Value="@false">Disabled</ForgeRadio>
         </ForgeRadioGroup>
     </div>
 
@@ -52,3 +52,4 @@
         await Task.CompletedTask;
     }
 }
+

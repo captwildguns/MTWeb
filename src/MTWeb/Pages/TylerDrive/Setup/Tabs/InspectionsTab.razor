@@ -2,8 +2,8 @@
     <div class="field-row">
         <label>Field Inspections</label>
         <ForgeRadioGroup @bind-Value="_model.FieldInspectionsEnabled">
-            <ForgeRadio Value="true">Enabled</ForgeRadio>
-            <ForgeRadio Value="false">Disabled</ForgeRadio>
+            <ForgeRadio Value="@true">Enabled</ForgeRadio>
+            <ForgeRadio Value="@false">Disabled</ForgeRadio>
         </ForgeRadioGroup>
     </div>
 
@@ -36,8 +36,8 @@
     <div class="field-row">
         <label>Odometer Warning</label>
         <ForgeRadioGroup @bind-Value="_model.OdometerWarningEnabled">
-            <ForgeRadio Value="true">Enabled</ForgeRadio>
-            <ForgeRadio Value="false">Disabled</ForgeRadio>
+            <ForgeRadio Value="@true">Enabled</ForgeRadio>
+            <ForgeRadio Value="@false">Disabled</ForgeRadio>
         </ForgeRadioGroup>
     </div>
     @if (_model.OdometerWarningEnabled)
@@ -60,3 +60,4 @@
     private ForgeForm? _form;
     private async Task HandleSave() { await Task.CompletedTask; }
 }
+

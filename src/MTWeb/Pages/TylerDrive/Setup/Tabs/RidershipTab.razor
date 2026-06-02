@@ -1,16 +1,16 @@
 ﻿<ForgeForm @ref="_form" Model="_model">
-    <div class="field-row"><label>Student Ridership</label><ForgeRadioGroup @bind-Value="_model.StudentRidershipEnabled"><ForgeRadio Value="true">Enabled</ForgeRadio><ForgeRadio Value="false">Disabled</ForgeRadio></ForgeRadioGroup></div>
-    <div class="field-row field-row-indent"><label>Flag Students on Wrong Run</label><ForgeRadioGroup @bind-Value="_model.FlagStudentsOnWrongRun"><ForgeRadio Value="true">Enabled</ForgeRadio><ForgeRadio Value="false">Disabled</ForgeRadio></ForgeRadioGroup></div>
-    <div class="field-row field-row-indent"><label>Flag Students at Wrong Stop</label><ForgeRadioGroup @bind-Value="_model.FlagStudentsAtWrongStop"><ForgeRadio Value="true">Enabled</ForgeRadio><ForgeRadio Value="false">Disabled</ForgeRadio></ForgeRadioGroup></div>
-    <div class="field-row field-row-indent"><label>Show Student Seating</label><ForgeRadioGroup @bind-Value="_model.ShowStudentSeating"><ForgeRadio Value="true">Enabled</ForgeRadio><ForgeRadio Value="false">Disabled</ForgeRadio></ForgeRadioGroup></div>
-    <div class="field-row field-row-indent"><label>Show No Shows</label><ForgeRadioGroup @bind-Value="_model.ShowNoShows"><ForgeRadio Value="true">Enabled</ForgeRadio><ForgeRadio Value="false">Disabled</ForgeRadio></ForgeRadioGroup></div>
-    <div class="field-row field-row-indent"><label>DSR</label><ForgeRadioGroup @bind-Value="_model.DsrEnabled"><ForgeRadio Value="true">Enabled</ForgeRadio><ForgeRadio Value="false">Disabled</ForgeRadio></ForgeRadioGroup></div>
-    <div class="field-row field-row-indent"><label>Enable QR Reader</label><ForgeRadioGroup @bind-Value="_model.EnableQrReader"><ForgeRadio Value="true">Enabled</ForgeRadio><ForgeRadio Value="false">Disabled</ForgeRadio></ForgeRadioGroup></div>
+    <div class="field-row"><label>Student Ridership</label><ForgeRadioGroup @bind-Value="_model.StudentRidershipEnabled"><ForgeRadio Value="@true">Enabled</ForgeRadio><ForgeRadio Value="@false">Disabled</ForgeRadio></ForgeRadioGroup></div>
+    <div class="field-row field-row-indent"><label>Flag Students on Wrong Run</label><ForgeRadioGroup @bind-Value="_model.FlagStudentsOnWrongRun"><ForgeRadio Value="@true">Enabled</ForgeRadio><ForgeRadio Value="@false">Disabled</ForgeRadio></ForgeRadioGroup></div>
+    <div class="field-row field-row-indent"><label>Flag Students at Wrong Stop</label><ForgeRadioGroup @bind-Value="_model.FlagStudentsAtWrongStop"><ForgeRadio Value="@true">Enabled</ForgeRadio><ForgeRadio Value="@false">Disabled</ForgeRadio></ForgeRadioGroup></div>
+    <div class="field-row field-row-indent"><label>Show Student Seating</label><ForgeRadioGroup @bind-Value="_model.ShowStudentSeating"><ForgeRadio Value="@true">Enabled</ForgeRadio><ForgeRadio Value="@false">Disabled</ForgeRadio></ForgeRadioGroup></div>
+    <div class="field-row field-row-indent"><label>Show No Shows</label><ForgeRadioGroup @bind-Value="_model.ShowNoShows"><ForgeRadio Value="@true">Enabled</ForgeRadio><ForgeRadio Value="@false">Disabled</ForgeRadio></ForgeRadioGroup></div>
+    <div class="field-row field-row-indent"><label>DSR</label><ForgeRadioGroup @bind-Value="_model.DsrEnabled"><ForgeRadio Value="@true">Enabled</ForgeRadio><ForgeRadio Value="@false">Disabled</ForgeRadio></ForgeRadioGroup></div>
+    <div class="field-row field-row-indent"><label>Enable QR Reader</label><ForgeRadioGroup @bind-Value="_model.EnableQrReader"><ForgeRadio Value="@true">Enabled</ForgeRadio><ForgeRadio Value="@false">Disabled</ForgeRadio></ForgeRadioGroup></div>
     <div class="field-row field-row-indent">
         <label>Custom Fields</label>
         <ForgeTextField @bind-Value="_model.CustomFields" FloatLabelType="FloatLabelType.Never" style="width:220px" />
     </div>
-    <div class="field-row"><label>Require Driver Acknowledgement of Visual Indicators</label><ForgeRadioGroup @bind-Value="_model.RequireDriverAcknowledgementOfVisualIndicators"><ForgeRadio Value="true">Enabled</ForgeRadio><ForgeRadio Value="false">Disabled</ForgeRadio></ForgeRadioGroup></div>
+    <div class="field-row"><label>Require Driver Acknowledgement of Visual Indicators</label><ForgeRadioGroup @bind-Value="_model.RequireDriverAcknowledgementOfVisualIndicators"><ForgeRadio Value="@true">Enabled</ForgeRadio><ForgeRadio Value="@false">Disabled</ForgeRadio></ForgeRadioGroup></div>
     <div class="setup-actions"><StxButton Intent="StxButtonIntent.Save" OnClick="HandleSave" /></div>
 </ForgeForm>
 
@@ -19,3 +19,4 @@
     private ForgeForm? _form;
     private async Task HandleSave() { await Task.CompletedTask; }
 }
+

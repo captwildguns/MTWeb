@@ -1,5 +1,5 @@
 ﻿<ForgeForm @ref="_form" Model="_model">
-    <div class="field-row"><label>Timekeeping</label><ForgeRadioGroup @bind-Value="_model.TimekeepingEnabled"><ForgeRadio Value="true">Enabled</ForgeRadio><ForgeRadio Value="false">Disabled</ForgeRadio></ForgeRadioGroup></div>
+    <div class="field-row"><label>Timekeeping</label><ForgeRadioGroup @bind-Value="_model.TimekeepingEnabled"><ForgeRadio Value="@true">Enabled</ForgeRadio><ForgeRadio Value="@false">Disabled</ForgeRadio></ForgeRadioGroup></div>
     @if (_model.TimekeepingEnabled)
     {
         <div class="field-row-indent" style="padding-top:4px"><ForgeCheckbox @bind-Value="_model.MandatoryPunchIn" Label="Mandatory Punch In" /></div>
@@ -39,3 +39,4 @@
     private ForgeForm? _form;
     private async Task HandleSave() { await Task.CompletedTask; }
 }
+
