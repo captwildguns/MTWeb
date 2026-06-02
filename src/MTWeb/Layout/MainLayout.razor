@@ -32,16 +32,16 @@
             @* Tyler Drive — expands to show sub-pages *@
             <forge-expansion-panel open="@(_isTylerDriveActive ? "" : null)">
                 <div slot="header" style="display:flex;align-items:center;gap:8px;padding:4px 0">
-                    <ForgeIcon Icon="ForgeIcons.PhoneAndroid" />
+                    <ForgeIcon Icon="ForgeIcons.TabletAndroid" />
                     <span>Tyler Drive</span>
                 </div>
-                <NavItem Href="tyler-drive/home"        Icon="ForgeIcons.Home"        Label="Home" />
-                <NavItem Href="tyler-drive/setup"       Icon="ForgeIcons.Settings"    Label="Setup" />
-                <NavItem Href="tyler-drive/messaging"   Icon="ForgeIcons.ChatBubble"  Label="Messaging" />
-                <NavItem Href="tyler-drive/break-time"  Icon="ForgeIcons.Timer"       Label="Break Time" />
-                <NavItem Href="tyler-drive/timekeeping" Icon="ForgeIcons.AccessTime"  Label="Timekeeping" />
-                <NavItem Href="tyler-drive/inspections" Icon="ForgeIcons.CheckCircle" Label="Inspections" />
-                <NavItem Href="tyler-drive/reports"     Icon="ForgeIcons.BarChart"    Label="Reports" />
+                <NavItem Href="tyler-drive/home"        Icon="ForgeIcons.Home"        Label="Home"        Indented="true" />
+                <NavItem Href="tyler-drive/setup"       Icon="ForgeIcons.Settings"    Label="Setup"       Indented="true" />
+                <NavItem Href="tyler-drive/messaging"   Icon="ForgeIcons.ChatBubble"  Label="Messaging"   Indented="true" />
+                <NavItem Href="tyler-drive/break-time"  Icon="ForgeIcons.Timer"       Label="Break Time"  Indented="true" />
+                <NavItem Href="tyler-drive/timekeeping" Icon="ForgeIcons.AccessTime"  Label="Timekeeping" Indented="true" />
+                <NavItem Href="tyler-drive/inspections" Icon="ForgeIcons.CheckCircle" Label="Inspections" Indented="true" />
+                <NavItem Href="tyler-drive/reports"     Icon="ForgeIcons.BarChart"    Label="Reports"     Indented="true" />
             </forge-expansion-panel>
 
             <NavItem Href="tyler-bus-attendance"    Icon="ForgeIcons.DirectionsBus"  Label="Tyler Bus Attendance" />
