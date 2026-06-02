@@ -23,7 +23,7 @@
         <div class="field-row-indent"><ForgeCheckbox @bind-Value="_model.AllowCanned" Label="Canned" /></div>
         @if (_model.AllowCanned)
         {
-            <div style="display:flex;align-items:center;gap:6px;padding:8px 0 4px 40px" @onclick="AddCannedResponse" role="button" style="cursor:pointer">
+            <div style="display:flex;align-items:center;gap:6px;padding:8px 0 4px 40px;cursor:pointer" @onclick="AddCannedResponse" role="button">
                 <forge-icon-button aria-label="Add"><ForgeIcon Icon="ForgeIcons.Add" /></forge-icon-button>
                 <span>Add a Canned Response</span>
             </div>
