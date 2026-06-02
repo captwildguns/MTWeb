@@ -1,4 +1,4 @@
-@using MTWeb.Pages.TylerDrive.Setup.Tabs
+﻿@using MTWeb.Pages.TylerDrive.Setup.Tabs
 
 <ForgeForm @ref="_form">
     <div class="setup-section">
@@ -14,7 +14,7 @@
 
         @if (_showLoginWarning)
         {
-            <ForgeInlineMessage Theme="AlertTheme.Warning" class="mt-small mb-small">
+            <ForgeInlineMessage Theme="ForgeInlineMessageTheme.Warning" class="mt-small mb-small">
                 Changing the login type will clear all existing user PINs. This action cannot be undone.
             </ForgeInlineMessage>
         }
@@ -77,3 +77,4 @@
         // TODO: reload from server
     }
 }
+

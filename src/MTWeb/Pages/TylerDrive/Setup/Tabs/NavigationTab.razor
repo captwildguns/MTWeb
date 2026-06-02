@@ -1,4 +1,4 @@
-@using MTWeb.Pages.TylerDrive.Setup.Tabs
+﻿@using MTWeb.Pages.TylerDrive.Setup.Tabs
 
 <ForgeForm @ref="_form">
     <div class="setup-section">
@@ -29,7 +29,7 @@
 
         @if (_model.EnableAutoRollout)
         {
-            <ForgeInlineMessage Theme="AlertTheme.Warning" class="mt-small">
+            <ForgeInlineMessage Theme="ForgeInlineMessageTheme.Warning" class="mt-small">
                 Enabling Auto Rollout will disable any non-Tyler Drive auto rollout configurations.
             </ForgeInlineMessage>
         }
@@ -131,3 +131,4 @@
 
     private void HandleCancel() { }
 }
+

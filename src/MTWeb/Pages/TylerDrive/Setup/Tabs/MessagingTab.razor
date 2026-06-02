@@ -1,4 +1,4 @@
-@using MTWeb.Pages.TylerDrive.Setup.Tabs
+﻿@using MTWeb.Pages.TylerDrive.Setup.Tabs
 
 <ForgeForm @ref="_form">
     <div class="setup-section">
@@ -50,7 +50,7 @@
 
                 @if (_model.CannedResponses.Count == 0)
                 {
-                    <ForgeInlineMessage Theme="AlertTheme.Info">
+                    <ForgeInlineMessage Theme="ForgeInlineMessageTheme.Info">
                         No canned responses defined. Click Add to create one.
                     </ForgeInlineMessage>
                 }
@@ -128,3 +128,4 @@
 
     private void HandleCancel() { }
 }
+
