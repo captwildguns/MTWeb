@@ -1,0 +1,66 @@
+@using MTWeb.Pages.TylerDrive.Setup.Tabs
+
+<ForgeForm @ref="_form">
+    <div class="setup-section">
+        <div class="field-row">
+            <label>Enable Timekeeping</label>
+            <ForgeSwitch @bind-Value="_model.EnableTimekeeping" Label="Enable" />
+        </div>
+    </div>
+
+    @if (_model.EnableTimekeeping)
+    {
+        <div class="setup-section">
+            <ForgeText Typography="Typography.Heading6" class="mb-small">Punch Settings</ForgeText>
+
+            <div class="field-row">
+                <label>Mandatory Punch</label>
+                <ForgeSwitch @bind-Value="_model.MandatoryPunch" Label="Required" />
+            </div>
+            <div class="field-row">
+                <label>Punch In Buffer (minutes)</label>
+                <ForgeNumberField @bind-Value="_model.PunchInBufferMinutes"
+                                  Label="Minutes"
+                                  Min="0" Max="100"
+                                  FloatLabelType="FloatLabelType.Always" />
+            </div>
+            <div class="field-row">
+                <label>Punch Out Buffer (minutes)</label>
+                <ForgeNumberField @bind-Value="_model.PunchOutBufferMinutes"
+                                  Label="Minutes"
+                                  Min="0" Max="100"
+                                  FloatLabelType="FloatLabelType.Always" />
+            </div>
+        </div>
+
+        <div class="setup-section">
+            <ForgeText Typography="Typography.Heading6" class="mb-small">Break Time</ForgeText>
+
+            <div class="field-row">
+                <label>Break Time</label>
+                <ForgeSelect @bind-Value="_model.BreakTime" Label="Break Time" FloatLabelType="FloatLabelType.Always">
+                    <ForgeSelectOption Value="@("Off")">Off</ForgeSelectOption>
+                    <ForgeSelectOption Value="@("On")">On</ForgeSelectOption>
+                </ForgeSelect>
+            </div>
+        </div>
+    }
+
+    <div class="setup-actions">
+        <StxButton Intent="StxButtonIntent.Save" OnClick="HandleSave" />
+        <StxButton Intent="StxButtonIntent.Cancel" OnClick="HandleCancel" />
+    </div>
+</ForgeForm>
+
+@code {
+    private readonly TimeTrackingSetupModel _model = new();
+    private ForgeForm? _form;
+
+    private async Task HandleSave()
+    {
+        // TODO: POST to /TylerDrive/Setup/UpdateTimeConfig
+        await Task.CompletedTask;
+    }
+
+    private void HandleCancel() { }
+}

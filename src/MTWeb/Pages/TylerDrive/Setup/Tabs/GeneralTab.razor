@@ -1,0 +1,79 @@
+@using MTWeb.Pages.TylerDrive.Setup.Tabs
+
+<ForgeForm @ref="_form">
+    <div class="setup-section">
+        <ForgeText Typography="Typography.Heading6" class="mb-small">Login</ForgeText>
+
+        <div class="field-row">
+            <label>Login Type</label>
+            <ForgeSelect @bind-Value="_model.LoginType" Label="Login Type" FloatLabelType="FloatLabelType.Always">
+                <ForgeSelectOption Value="@("EmployeePin")">Employee + PIN</ForgeSelectOption>
+                <ForgeSelectOption Value="@("EmployeeOnly")">Employee Only</ForgeSelectOption>
+            </ForgeSelect>
+        </div>
+
+        @if (_showLoginWarning)
+        {
+            <ForgeInlineMessage Theme="AlertTheme.Warning" class="mt-small mb-small">
+                Changing the login type will clear all existing user PINs. This action cannot be undone.
+            </ForgeInlineMessage>
+        }
+    </div>
+
+    <div class="setup-section">
+        <ForgeText Typography="Typography.Heading6" class="mb-small">Session</ForgeText>
+
+        <div class="field-row">
+            <label>Enable Auto Logout</label>
+            <ForgeSwitch @bind-Value="_model.EnableAutoLogout" Label="Auto Logout" />
+        </div>
+
+        @if (_model.EnableAutoLogout)
+        {
+            <div class="field-row">
+                <label>Auto Logout Time (minutes)</label>
+                <ForgeNumberField @bind-Value="_model.AutoLogoutMinutes"
+                                  Label="Minutes"
+                                  Min="1"
+                                  Max="1000"
+                                  FloatLabelType="FloatLabelType.Always" />
+            </div>
+        }
+    </div>
+
+    <div class="setup-actions">
+        <StxButton Intent="StxButtonIntent.Save" OnClick="HandleSave" />
+        <StxButton Intent="StxButtonIntent.Cancel" OnClick="HandleCancel" />
+    </div>
+</ForgeForm>
+
+@code {
+    private readonly GeneralSetupModel _model = new();
+    private ForgeForm? _form;
+    private bool _showLoginWarning;
+    private string _originalLoginType = string.Empty;
+
+    protected override void OnInitialized()
+    {
+        _originalLoginType = _model.LoginType;
+    }
+
+    private void HandleLoginTypeChange(string value)
+    {
+        _showLoginWarning = value != _originalLoginType;
+        _model.LoginType = value;
+    }
+
+    private async Task HandleSave()
+    {
+        // TODO: POST to /TylerDrive/Setup/UpdateGeneralConfig
+        _originalLoginType = _model.LoginType;
+        _showLoginWarning = false;
+        await Task.CompletedTask;
+    }
+
+    private void HandleCancel()
+    {
+        // TODO: reload from server
+    }
+}

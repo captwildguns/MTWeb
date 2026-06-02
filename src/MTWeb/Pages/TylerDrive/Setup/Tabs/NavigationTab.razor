@@ -1,0 +1,133 @@
+@using MTWeb.Pages.TylerDrive.Setup.Tabs
+
+<ForgeForm @ref="_form">
+    <div class="setup-section">
+        <ForgeText Typography="Typography.Heading6" class="mb-small">Basic Navigation</ForgeText>
+
+        <div class="field-row"><label>Enable Today's Runs</label><ForgeSwitch @bind-Value="_model.EnableTodaysRuns" Label="Enable" /></div>
+        <div class="field-row"><label>Enable Start Navigation</label><ForgeSwitch @bind-Value="_model.EnableStartNavigation" Label="Enable" /></div>
+        <div class="field-row"><label>Allow Trips</label><ForgeSwitch @bind-Value="_model.AllowTrips" Label="Enable" /></div>
+        <div class="field-row"><label>Show Next Stop ETA</label><ForgeSwitch @bind-Value="_model.ShowNextStopEta" Label="Show" /></div>
+        <div class="field-row"><label>Require Run Signature</label><ForgeSwitch @bind-Value="_model.RequireRunSignature" Label="Required" /></div>
+
+        @if (_model.AllowTrips)
+        {
+            <div class="field-row">
+                <label>Require Trip Completion Data</label>
+                <ForgeSwitch @bind-Value="_model.RequireTripCompletionData" Label="Required" />
+            </div>
+        }
+    </div>
+
+    <div class="setup-section">
+        <ForgeText Typography="Typography.Heading6" class="mb-small">Auto Rollout</ForgeText>
+
+        <div class="field-row">
+            <label>Enable Auto Rollout</label>
+            <ForgeSwitch @bind-Value="_model.EnableAutoRollout" Label="Enable" />
+        </div>
+
+        @if (_model.EnableAutoRollout)
+        {
+            <ForgeInlineMessage Theme="AlertTheme.Warning" class="mt-small">
+                Enabling Auto Rollout will disable any non-Tyler Drive auto rollout configurations.
+            </ForgeInlineMessage>
+        }
+    </div>
+
+    <div class="setup-section">
+        <ForgeText Typography="Typography.Heading6" class="mb-small">AVL (Automatic Vehicle Location)</ForgeText>
+
+        <div class="field-row"><label>Enable AVL</label><ForgeSwitch @bind-Value="_model.EnableAvl" Label="Enable" /></div>
+
+        @if (_model.EnableAvl)
+        {
+            <div class="field-row"><label>Event Only AVL</label><ForgeSwitch @bind-Value="_model.EventOnlyAvl" Label="Enable" /></div>
+            <div class="field-row">
+                <label>AVL Interval (seconds)</label>
+                <ForgeNumberField @bind-Value="_model.AvlIntervalSeconds" Label="Seconds" Min="1" FloatLabelType="FloatLabelType.Always" />
+            </div>
+            <div class="field-row">
+                <label>AVL Stop Interval (seconds)</label>
+                <ForgeNumberField @bind-Value="_model.AvlStopIntervalSeconds" Label="Seconds" Min="1" FloatLabelType="FloatLabelType.Always" />
+            </div>
+            <div class="field-row">
+                <label>Early Alert Threshold (minutes)</label>
+                <ForgeNumberField @bind-Value="_model.AvlEarlyAlertMinutes" Label="Minutes" Min="0" FloatLabelType="FloatLabelType.Always" />
+            </div>
+            <div class="field-row">
+                <label>Late Alert Threshold (minutes)</label>
+                <ForgeNumberField @bind-Value="_model.AvlLateAlertMinutes" Label="Minutes" Min="0" FloatLabelType="FloatLabelType.Always" />
+            </div>
+            <div class="field-row">
+                <label>Stop Arrival Threshold (feet)</label>
+                <ForgeNumberField @bind-Value="_model.StopArrivalThresholdFeet" Label="Feet" Min="0" FloatLabelType="FloatLabelType.Always" />
+            </div>
+            <div class="field-row"><label>Show Stop On Time</label><ForgeSwitch @bind-Value="_model.ShowStopOnTime" Label="Show" /></div>
+        }
+    </div>
+
+    <div class="setup-section">
+        <ForgeText Typography="Typography.Heading6" class="mb-small">Road Along</ForgeText>
+
+        <div class="field-row">
+            <label>Road Along Mode</label>
+            <ForgeRadioGroup @bind-Value="_roadAlongMode">
+                <ForgeRadio Value="@("AllStops")">All Stops</ForgeRadio>
+                <ForgeRadio Value="@("CurbToCurb")">Curb to Curb</ForgeRadio>
+            </ForgeRadioGroup>
+        </div>
+        <div class="field-row">
+            <label>Street Buffer (feet)</label>
+            <ForgeNumberField @bind-Value="_model.RoadAlongStreetBufferFeet" Label="Feet" Min="0" FloatLabelType="FloatLabelType.Always" />
+        </div>
+        <div class="field-row">
+            <label>Before Buffer (feet)</label>
+            <ForgeNumberField @bind-Value="_model.RoadAlongBeforeBufferFeet" Label="Feet" Min="0" FloatLabelType="FloatLabelType.Always" />
+        </div>
+        <div class="field-row">
+            <label>After Buffer (feet)</label>
+            <ForgeNumberField @bind-Value="_model.RoadAlongAfterBufferFeet" Label="Feet" Min="0" FloatLabelType="FloatLabelType.Always" />
+        </div>
+    </div>
+
+    <div class="setup-section">
+        <ForgeText Typography="Typography.Heading6" class="mb-small">Speed &amp; Stops</ForgeText>
+
+        <div class="field-row">
+            <label>Speeding Buffer (mph)</label>
+            <ForgeNumberField @bind-Value="_model.SpeedingBufferMph" Label="MPH" Min="0" FloatLabelType="FloatLabelType.Always" />
+        </div>
+        <div class="field-row"><label>Modify Stops: Require Planned Route</label><ForgeSwitch @bind-Value="_model.ModifyStopsRequirePlannedRoute" Label="Required" /></div>
+        <div class="field-row"><label>Allow Modify Stops During Navigation</label><ForgeSwitch @bind-Value="_model.AllowModifyStopsDuringNavigation" Label="Allow" /></div>
+        <div class="field-row"><label>Enable ETA Notifications</label><ForgeSwitch @bind-Value="_model.EnableEtaNotifications" Label="Enable" /></div>
+    </div>
+
+    <div class="setup-actions">
+        <StxButton Intent="StxButtonIntent.Save" OnClick="HandleSave" />
+        <StxButton Intent="StxButtonIntent.Cancel" OnClick="HandleCancel" />
+    </div>
+</ForgeForm>
+
+@code {
+    private readonly NavigationSetupModel _model = new();
+    private ForgeForm? _form;
+
+    private string _roadAlongMode
+    {
+        get => _model.RoadAlongAllStops ? "AllStops" : "CurbToCurb";
+        set
+        {
+            _model.RoadAlongAllStops = value == "AllStops";
+            _model.RoadAlongCurbToCurb = value == "CurbToCurb";
+        }
+    }
+
+    private async Task HandleSave()
+    {
+        // TODO: POST to /TylerDrive/Setup/UpdateDriveConfig
+        await Task.CompletedTask;
+    }
+
+    private void HandleCancel() { }
+}

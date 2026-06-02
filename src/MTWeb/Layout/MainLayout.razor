@@ -1,0 +1,36 @@
+@inherits LayoutComponentBase
+
+<StxAppLayout AppTitle="MT Web"
+              AppTitleHref="/"
+              NavGroups="@_navGroups"
+              AppBarButtons="@_appBarButtons">
+    <AppBarLogo>
+        <forge-icon name="@ForgeIcons.DirectionsBus.GetDisplayName()"></forge-icon>
+    </AppBarLogo>
+    <ChildContent>
+        <main id="main-content" class="p-medium">
+            @Body
+        </main>
+    </ChildContent>
+</StxAppLayout>
+
+@code {
+    private readonly IReadOnlyList<StxNavGroup> _navGroups =
+    [
+        new()
+        {
+            Label = "Tyler Drive",
+            Icon  = ForgeIcons.PhoneAndroid,
+            Items =
+            [
+                new() { Text = "Setup", Href = "/tyler-drive/setup", Icon = ForgeIcons.Settings }
+            ]
+        }
+    ];
+
+    private readonly IReadOnlyList<StxAppBarButton> _appBarButtons =
+    [
+        StxAppBarButtons.Help(),
+        StxAppBarButtons.Profile(name: "MT User", email: "user@tylertech.com", avatarText: "MT")
+    ];
+}

@@ -1,0 +1,48 @@
+#blazor-error-ui {
+    background: lightyellow;
+    bottom: 0;
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+    display: none;
+    left: 0;
+    padding: 0.6rem 1.25rem 0.7rem;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+#blazor-error-ui .dismiss {
+    cursor: pointer;
+    position: absolute;
+    right: 0.75rem;
+    top: 0.5rem;
+}
+
+.setup-page {
+    padding: var(--forge-spacing-medium);
+    max-width: 900px;
+}
+
+.setup-section {
+    margin-bottom: var(--forge-spacing-large);
+}
+
+.setup-actions {
+    display: flex;
+    gap: var(--forge-spacing-small);
+    padding-top: var(--forge-spacing-medium);
+    border-top: 1px solid var(--forge-theme-border-low);
+    margin-top: var(--forge-spacing-medium);
+}
+
+.field-row {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    align-items: center;
+    gap: var(--forge-spacing-medium);
+    padding: var(--forge-spacing-small) 0;
+}
+
+.field-row label {
+    font: var(--forge-typography-body2);
+    color: var(--forge-theme-text-medium);
+}

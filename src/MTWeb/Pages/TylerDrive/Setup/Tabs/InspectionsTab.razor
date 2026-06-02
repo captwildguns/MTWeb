@@ -1,0 +1,100 @@
+@using MTWeb.Pages.TylerDrive.Setup.Tabs
+
+<ForgeForm @ref="_form">
+    <div class="setup-section">
+        <div class="field-row">
+            <label>Enable Field Inspections</label>
+            <ForgeSwitch @bind-Value="_model.EnableFieldInspections" Label="Enable" />
+        </div>
+    </div>
+
+    @if (_model.EnableFieldInspections)
+    {
+        <div class="setup-section">
+            <ForgeText Typography="Typography.Heading6" class="mb-small">Signature &amp; Notes</ForgeText>
+
+            <div class="field-row">
+                <label>Signature on Fail</label>
+                <ForgeSwitch @bind-Value="_model.SignatureOnFail" Label="Required" />
+            </div>
+            <div class="field-row">
+                <label>Signature on Pass</label>
+                <ForgeSwitch @bind-Value="_model.SignatureOnPass" Label="Required" />
+            </div>
+            <div class="field-row">
+                <label>Notes on Fail</label>
+                <ForgeSwitch @bind-Value="_model.NotesOnFail" Label="Required" />
+            </div>
+            <div class="field-row">
+                <label>Notes on Critical</label>
+                <ForgeSwitch @bind-Value="_model.NotesOnCritical" Label="Required" />
+            </div>
+        </div>
+
+        <div class="setup-section">
+            <ForgeText Typography="Typography.Heading6" class="mb-small">Vehicle &amp; Work Orders</ForgeText>
+
+            <div class="field-row">
+                <label>Update Odometer</label>
+                <ForgeSwitch @bind-Value="_model.UpdateOdometer" Label="Enable" />
+            </div>
+            <div class="field-row">
+                <label>Enforce Single Defect</label>
+                <ForgeSwitch @bind-Value="_model.EnforceSingleDefect" Label="Enable" />
+            </div>
+            <div class="field-row">
+                <label>Enable Work Order Verification</label>
+                <ForgeSwitch @bind-Value="_model.EnableWorkOrderVerification" Label="Enable" />
+            </div>
+            <div class="field-row">
+                <label>Hide Vehicles with Open Work Orders</label>
+                <ForgeSwitch @bind-Value="_model.HideVehiclesWithOpenWorkOrders" Label="Enable" />
+            </div>
+        </div>
+
+        <div class="setup-section">
+            <ForgeText Typography="Typography.Heading6" class="mb-small">Odometer Warning</ForgeText>
+
+            <div class="field-row">
+                <label>Enable Odometer Warning</label>
+                <ForgeSwitch @bind-Value="_model.EnableOdometerWarning" Label="Enable" />
+            </div>
+
+            @if (_model.EnableOdometerWarning)
+            {
+                <div class="field-row">
+                    <label>Warning Threshold (%)</label>
+                    <ForgeNumberField @bind-Value="_model.OdometerWarningThreshold"
+                                      Label="Threshold"
+                                      Min="0" Max="100"
+                                      FloatLabelType="FloatLabelType.Always" />
+                </div>
+                <div class="field-row">
+                    <label>Minimum Units</label>
+                    <ForgeNumberField @bind-Value="_model.OdometerWarningMinimumUnits"
+                                      Label="Units"
+                                      Min="0" Max="1000"
+                                      FloatLabelType="FloatLabelType.Always" />
+                </div>
+            }
+        </div>
+    }
+
+    <div class="setup-actions">
+        <StxButton Intent="StxButtonIntent.Save" OnClick="HandleSave" />
+        <StxButton Intent="StxButtonIntent.Cancel" OnClick="HandleCancel" />
+    </div>
+</ForgeForm>
+
+@code {
+    private readonly InspectionsSetupModel _model = new();
+    private ForgeForm? _form;
+
+    private async Task HandleSave()
+    {
+        // TODO: POST to /TylerDrive/Setup/UpdateInspectionsConfig
+        await Task.CompletedTask;
+    }
+
+    private void HandleCancel() { }
+}

@@ -1,0 +1,130 @@
+@using MTWeb.Pages.TylerDrive.Setup.Tabs
+
+<ForgeForm @ref="_form">
+    <div class="setup-section">
+        <ForgeText Typography="Typography.Heading6" class="mb-small">Messaging Mode</ForgeText>
+
+        <div class="field-row">
+            <label>Messaging Mode</label>
+            <ForgeSelect @bind-Value="_model.MessagingMode" Label="Mode" FloatLabelType="FloatLabelType.Always">
+                <ForgeSelectOption Value="@("Off")">Off</ForgeSelectOption>
+                <ForgeSelectOption Value="@("OneWay")">One-Way</ForgeSelectOption>
+                <ForgeSelectOption Value="@("TwoWay")">Two-Way</ForgeSelectOption>
+            </ForgeSelect>
+        </div>
+
+        <div class="field-row">
+            <label>Days of History</label>
+            <ForgeSelect @bind-Value="_model.DaysOfHistory" Label="Days" FloatLabelType="FloatLabelType.Always">
+                @for (int i = 0; i <= 23; i++)
+                {
+                    var days = i;
+                    <ForgeSelectOption Value="@days">@days day@(days == 1 ? "" : "s")</ForgeSelectOption>
+                }
+            </ForgeSelect>
+        </div>
+    </div>
+
+    @if (_model.MessagingMode != "Off")
+    {
+        <div class="setup-section">
+            <ForgeText Typography="Typography.Heading6" class="mb-small">Response Options</ForgeText>
+
+            <div class="field-row">
+                <label>Allow Canned Responses</label>
+                <ForgeSwitch @bind-Value="_model.AllowCannedResponses" Label="Enable" />
+            </div>
+            <div class="field-row">
+                <label>Allow Keyboard Responses</label>
+                <ForgeSwitch @bind-Value="_model.AllowKeyboardResponses" Label="Enable" />
+            </div>
+        </div>
+
+        @if (_model.AllowCannedResponses)
+        {
+            <div class="setup-section">
+                <div style="display:flex; justify-content:space-between; align-items:center;" class="mb-small">
+                    <ForgeText Typography="Typography.Heading6">Canned Responses</ForgeText>
+                    <StxButton Intent="StxButtonIntent.Add" OnClick="AddCannedResponse" />
+                </div>
+
+                @if (_model.CannedResponses.Count == 0)
+                {
+                    <ForgeInlineMessage Theme="AlertTheme.Info">
+                        No canned responses defined. Click Add to create one.
+                    </ForgeInlineMessage>
+                }
+                else
+                {
+                    @foreach (var (response, index) in _model.CannedResponses.Select((r, i) => (r, i)))
+                    {
+                        <div style="display:flex; gap:var(--forge-spacing-small); align-items:center; margin-bottom:var(--forge-spacing-small);">
+                            <ForgeTextField @bind-Value="response.Text"
+                                            Label="Response text"
+                                            FloatLabelType="FloatLabelType.Always"
+                                            style="flex:1" />
+                            <forge-icon-button aria-label="Move up"
+                                               disabled="@(index == 0)"
+                                               @onclick="() => MoveUp(index)">
+                                <ForgeIcon Icon="ForgeIcons.ArrowUpward" />
+                            </forge-icon-button>
+                            <forge-icon-button aria-label="Move down"
+                                               disabled="@(index == _model.CannedResponses.Count - 1)"
+                                               @onclick="() => MoveDown(index)">
+                                <ForgeIcon Icon="ForgeIcons.ArrowDownward" />
+                            </forge-icon-button>
+                            <forge-icon-button aria-label="Remove" @onclick="() => RemoveCannedResponse(index)">
+                                <ForgeIcon Icon="ForgeIcons.Delete" />
+                            </forge-icon-button>
+                        </div>
+                    }
+                }
+            </div>
+        }
+    }
+
+    <div class="setup-actions">
+        <StxButton Intent="StxButtonIntent.Save" OnClick="HandleSave" />
+        <StxButton Intent="StxButtonIntent.Cancel" OnClick="HandleCancel" />
+    </div>
+</ForgeForm>
+
+@code {
+    private readonly MessagingSetupModel _model = new();
+    private ForgeForm? _form;
+    private int _nextId = 1;
+
+    private void AddCannedResponse()
+    {
+        _model.CannedResponses.Add(new CannedResponseModel
+        {
+            Id = _nextId++,
+            Sequence = _model.CannedResponses.Count + 1
+        });
+    }
+
+    private void RemoveCannedResponse(int index) =>
+        _model.CannedResponses.RemoveAt(index);
+
+    private void MoveUp(int index)
+    {
+        if (index <= 0) return;
+        (_model.CannedResponses[index], _model.CannedResponses[index - 1]) =
+            (_model.CannedResponses[index - 1], _model.CannedResponses[index]);
+    }
+
+    private void MoveDown(int index)
+    {
+        if (index >= _model.CannedResponses.Count - 1) return;
+        (_model.CannedResponses[index], _model.CannedResponses[index + 1]) =
+            (_model.CannedResponses[index + 1], _model.CannedResponses[index]);
+    }
+
+    private async Task HandleSave()
+    {
+        // TODO: POST to /api/cannedresponse/ and /TylerDrive/Setup/UpdateMessagingConfig
+        await Task.CompletedTask;
+    }
+
+    private void HandleCancel() { }
+}

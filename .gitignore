@@ -1,0 +1,24 @@
+## .NET
+bin/
+obj/
+*.user
+.vs/
+*.suo
+*.userprefs
+
+## NuGet
+packages/
+*.nupkg
+*.snupkg
+project.lock.json
+
+## Rider / VS
+.idea/
+*.DotSettings.user
+
+## Node (for style builds)
+node_modules/
+
+## OS
+.DS_Store
+Thumbs.db

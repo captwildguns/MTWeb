@@ -1,0 +1,51 @@
+@using MTWeb.Pages.TylerDrive.Setup.Tabs
+
+<ForgeForm @ref="_form">
+    <div class="setup-section">
+        <div class="field-row">
+            <label>Enable Student Ridership</label>
+            <ForgeSwitch @bind-Value="_model.EnableStudentRidership" Label="Enable" />
+        </div>
+
+        <div class="field-row">
+            <label>Active Student Threshold</label>
+            <ForgeNumberField @bind-Value="_model.ActiveStudentThreshold"
+                              Label="Threshold"
+                              Min="0"
+                              FloatLabelType="FloatLabelType.Always" />
+        </div>
+    </div>
+
+    @if (_model.EnableStudentRidership)
+    {
+        <div class="setup-section">
+            <ForgeText Typography="Typography.Heading6" class="mb-small">Ridership Options</ForgeText>
+
+            <div class="field-row"><label>Flag Students per Run</label><ForgeSwitch @bind-Value="_model.FlagStudentsRun" Label="Enable" /></div>
+            <div class="field-row"><label>Flag Students per Stop</label><ForgeSwitch @bind-Value="_model.FlagStudentsStop" Label="Enable" /></div>
+            <div class="field-row"><label>Show Student Seating</label><ForgeSwitch @bind-Value="_model.ShowStudentSeating" Label="Show" /></div>
+            <div class="field-row"><label>Show No-Shows</label><ForgeSwitch @bind-Value="_model.ShowNoShows" Label="Show" /></div>
+            <div class="field-row"><label>Enable Daily Student Report (DSR)</label><ForgeSwitch @bind-Value="_model.EnableDsr" Label="Enable" /></div>
+            <div class="field-row"><label>Require Visual Indicator Acknowledgement</label><ForgeSwitch @bind-Value="_model.RequireVisualIndicatorAcknowledgement" Label="Required" /></div>
+            <div class="field-row"><label>Enable QR Reader</label><ForgeSwitch @bind-Value="_model.EnableQrReader" Label="Enable" /></div>
+        </div>
+    }
+
+    <div class="setup-actions">
+        <StxButton Intent="StxButtonIntent.Save" OnClick="HandleSave" />
+        <StxButton Intent="StxButtonIntent.Cancel" OnClick="HandleCancel" />
+    </div>
+</ForgeForm>
+
+@code {
+    private readonly RidershipSetupModel _model = new();
+    private ForgeForm? _form;
+
+    private async Task HandleSave()
+    {
+        // TODO: POST to /TylerDrive/Setup/UpdateRidershipConfig
+        await Task.CompletedTask;
+    }
+
+    private void HandleCancel() { }
+}

@@ -1,0 +1,163 @@
+@using MTWeb.Pages.TylerDrive.Setup.Tabs
+
+<ForgeForm @ref="_form">
+    <div class="setup-section">
+        <ForgeText Typography="Typography.Heading6" class="mb-small">Cellular Data</ForgeText>
+
+        <div class="field-row"><label>Allow Cellular for Feedback</label><ForgeSwitch @bind-Value="_model.AllowCellularForFeedback" Label="Allow" /></div>
+        <div class="field-row"><label>Allow Cellular for Global Usage</label><ForgeSwitch @bind-Value="_model.AllowCellularForGlobalUsage" Label="Allow" /></div>
+        <div class="field-row"><label>Allow Cellular for News &amp; Updates</label><ForgeSwitch @bind-Value="_model.AllowCellularForNewsAndUpdates" Label="Allow" /></div>
+        <div class="field-row"><label>Allow Cellular for Map Downloads</label><ForgeSwitch @bind-Value="_model.AllowCellularForMapDownloads" Label="Allow" /></div>
+        <div class="field-row"><label>Allow Cellular for Search</label><ForgeSwitch @bind-Value="_model.AllowCellularForSearch" Label="Allow" /></div>
+        <div class="field-row"><label>Allow Cellular for Traffic Services</label><ForgeSwitch @bind-Value="_model.AllowCellularForTrafficServices" Label="Allow" /></div>
+    </div>
+
+    <div class="setup-section">
+        <ForgeText Typography="Typography.Heading6" class="mb-small">Navigation Display</ForgeText>
+
+        <div class="field-row">
+            <label>Approaching Stop Distance (ft)</label>
+            <ForgeNumberField @bind-Value="_model.ApproachingStopDistance" Label="Feet" Min="0" FloatLabelType="FloatLabelType.Always" />
+        </div>
+        <div class="field-row">
+            <label>Chevron Display</label>
+            <ForgeSelect @bind-Value="_model.ChevronDisplay" Label="Display" FloatLabelType="FloatLabelType.Always">
+                <ForgeSelectOption Value="@("Both")">Both</ForgeSelectOption>
+                <ForgeSelectOption Value="@("TurnOnly")">Turn Only</ForgeSelectOption>
+                <ForgeSelectOption Value="@("None")">None</ForgeSelectOption>
+            </ForgeSelect>
+        </div>
+        <div class="field-row">
+            <label>Flow Traffic Availability</label>
+            <ForgeSelect @bind-Value="_model.FlowTrafficAvailability" Label="Availability" FloatLabelType="FloatLabelType.Always">
+                <ForgeSelectOption Value="@("Automatic")">Automatic</ForgeSelectOption>
+                <ForgeSelectOption Value="@("Always")">Always</ForgeSelectOption>
+                <ForgeSelectOption Value="@("Never")">Never</ForgeSelectOption>
+            </ForgeSelect>
+        </div>
+        <div class="field-row">
+            <label>Stop Side Display</label>
+            <ForgeSelect @bind-Value="_model.StopSideDisplay" Label="Display" FloatLabelType="FloatLabelType.Always">
+                <ForgeSelectOption Value="@("Auto")">Auto</ForgeSelectOption>
+                <ForgeSelectOption Value="@("Left")">Left</ForgeSelectOption>
+                <ForgeSelectOption Value="@("Right")">Right</ForgeSelectOption>
+            </ForgeSelect>
+        </div>
+        <div class="field-row">
+            <label>Traffic Bar Visibility</label>
+            <ForgeSelect @bind-Value="_model.TrafficBarVisibility" Label="Visibility" FloatLabelType="FloatLabelType.Always">
+                <ForgeSelectOption Value="@("Automatic")">Automatic</ForgeSelectOption>
+                <ForgeSelectOption Value="@("Always")">Always</ForgeSelectOption>
+                <ForgeSelectOption Value="@("Never")">Never</ForgeSelectOption>
+            </ForgeSelect>
+        </div>
+    </div>
+
+    <div class="setup-section">
+        <ForgeText Typography="Typography.Heading6" class="mb-small">Audio &amp; Spoken Feedback</ForgeText>
+
+        <div class="field-row"><label>Play Welcome</label><ForgeSwitch @bind-Value="_model.PlayWelcome" Label="Enable" /></div>
+        <div class="field-row"><label>Say Welcome</label><ForgeSwitch @bind-Value="_model.SayWelcome" Label="Enable" /></div>
+        <div class="field-row"><label>Audible Directions</label><ForgeSwitch @bind-Value="_model.AudibleDirections" Label="Enable" /></div>
+        <div class="field-row"><label>Speak Calculating Route</label><ForgeSwitch @bind-Value="_model.SpeakCalculatingRoute" Label="Enable" /></div>
+        <div class="field-row"><label>Speed Alert Audio</label><ForgeSwitch @bind-Value="_model.SetSpeedAlertAudio" Label="Enable" /></div>
+    </div>
+
+    <div class="setup-section">
+        <ForgeText Typography="Typography.Heading6" class="mb-small">Navigation Messages</ForgeText>
+
+        <div class="field-row"><label>Show Arrival Popup</label><ForgeSwitch @bind-Value="_model.ShowArrivalPopup" Label="Show" /></div>
+        <div class="field-row">
+            <label>Message Display at Stop</label>
+            <ForgeSelect @bind-Value="_model.NavMessageAtStop" Label="At Stop" FloatLabelType="FloatLabelType.Always">
+                <ForgeSelectOption Value="@("Always")">Always</ForgeSelectOption>
+                <ForgeSelectOption Value="@("OnError")">On Error</ForgeSelectOption>
+                <ForgeSelectOption Value="@("Never")">Never</ForgeSelectOption>
+            </ForgeSelect>
+        </div>
+        <div class="field-row">
+            <label>Message Display in Motion</label>
+            <ForgeSelect @bind-Value="_model.NavMessageInMotion" Label="In Motion" FloatLabelType="FloatLabelType.Always">
+                <ForgeSelectOption Value="@("Always")">Always</ForgeSelectOption>
+                <ForgeSelectOption Value="@("OnError")">On Error</ForgeSelectOption>
+                <ForgeSelectOption Value="@("Never")">Never</ForgeSelectOption>
+            </ForgeSelect>
+        </div>
+    </div>
+
+    <div class="setup-section">
+        <ForgeText Typography="Typography.Heading6" class="mb-small">Turn Warnings</ForgeText>
+
+        <div class="field-row"><label>Enable Early Turn Warning</label><ForgeSwitch @bind-Value="_model.EnableEarlyTurnWarning" Label="Enable" /></div>
+        <div class="field-row"><label>Enable Far Turn Warning</label><ForgeSwitch @bind-Value="_model.EnableFarTurnWarning" Label="Enable" /></div>
+        <div class="field-row"><label>Enable Near Turn Warning</label><ForgeSwitch @bind-Value="_model.EnableNearTurnWarning" Label="Enable" /></div>
+        <div class="field-row"><label>Enable Turn Restrictions</label><ForgeSwitch @bind-Value="_model.EnableTurnRestrictions" Label="Enable" /></div>
+        <div class="field-row"><label>Show Turn After Next</label><ForgeSwitch @bind-Value="_model.ShowTurnAfterNext" Label="Show" /></div>
+    </div>
+
+    <div class="setup-section">
+        <ForgeText Typography="Typography.Heading6" class="mb-small">Map Display</ForgeText>
+
+        <div class="field-row">
+            <label>Map View at Stop</label>
+            <ForgeSelect @bind-Value="_model.NavMapViewAtStop" Label="At Stop" FloatLabelType="FloatLabelType.Always">
+                <ForgeSelectOption Value="@("Overview")">Overview</ForgeSelectOption>
+                <ForgeSelectOption Value="@("Turn")">Turn</ForgeSelectOption>
+                <ForgeSelectOption Value="@("Street")">Street</ForgeSelectOption>
+            </ForgeSelect>
+        </div>
+        <div class="field-row">
+            <label>Map View in Motion</label>
+            <ForgeSelect @bind-Value="_model.NavMapViewInMotion" Label="In Motion" FloatLabelType="FloatLabelType.Always">
+                <ForgeSelectOption Value="@("Overview")">Overview</ForgeSelectOption>
+                <ForgeSelectOption Value="@("Turn")">Turn</ForgeSelectOption>
+                <ForgeSelectOption Value="@("Street")">Street</ForgeSelectOption>
+            </ForgeSelect>
+        </div>
+        <div class="field-row">
+            <label>Map Update Interval (ms)</label>
+            <ForgeNumberField @bind-Value="_model.MapUpdateIntervalMs" Label="Milliseconds" Min="100" FloatLabelType="FloatLabelType.Always" />
+        </div>
+    </div>
+
+    <div class="setup-section">
+        <ForgeText Typography="Typography.Heading6" class="mb-small">Info Bar</ForgeText>
+
+        <div class="field-row">
+            <label>Info Bar Left</label>
+            <ForgeSelect @bind-Value="_model.InfoBarLeft" Label="Left" FloatLabelType="FloatLabelType.Always">
+                <ForgeSelectOption Value="@("Speed")">Speed</ForgeSelectOption>
+                <ForgeSelectOption Value="@("ETA")">ETA</ForgeSelectOption>
+                <ForgeSelectOption Value="@("Distance")">Distance</ForgeSelectOption>
+                <ForgeSelectOption Value="@("None")">None</ForgeSelectOption>
+            </ForgeSelect>
+        </div>
+        <div class="field-row">
+            <label>Info Bar Right</label>
+            <ForgeSelect @bind-Value="_model.InfoBarRight" Label="Right" FloatLabelType="FloatLabelType.Always">
+                <ForgeSelectOption Value="@("Speed")">Speed</ForgeSelectOption>
+                <ForgeSelectOption Value="@("ETA")">ETA</ForgeSelectOption>
+                <ForgeSelectOption Value="@("Distance")">Distance</ForgeSelectOption>
+                <ForgeSelectOption Value="@("None")">None</ForgeSelectOption>
+            </ForgeSelect>
+        </div>
+    </div>
+
+    <div class="setup-actions">
+        <StxButton Intent="StxButtonIntent.Save" OnClick="HandleSave" />
+        <StxButton Intent="StxButtonIntent.Cancel" OnClick="HandleCancel" />
+    </div>
+</ForgeForm>
+
+@code {
+    private readonly AlkSetupModel _model = new();
+    private ForgeForm? _form;
+
+    private async Task HandleSave()
+    {
+        // TODO: POST to /TylerDrive/Setup/UpdateAlkConfig
+        await Task.CompletedTask;
+    }
+
+    private void HandleCancel() { }
+}
