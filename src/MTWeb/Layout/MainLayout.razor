@@ -1,14 +1,53 @@
 @inherits LayoutComponentBase
+@inject NavigationManager Nav
 
 <StxAppLayout AppTitle="MT Web"
               AppTitleHref="/"
-              NavGroups="@_navGroups"
               AppBarButtons="@_appBarButtons"
               UseMiniDrawer="false"
               AllowMiniHoverExpand="false">
     <AppBarLogo>
         <forge-icon name="@ForgeIcons.DirectionsBus.GetDisplayName()"></forge-icon>
     </AppBarLogo>
+    <Navigation>
+        <forge-list navlist="true" dense="true">
+            <NavItem Href="dashboard"               Icon="ForgeIcons.Dashboard"          Label="Dashboard" />
+            <NavItem Href="history"                 Icon="ForgeIcons.History"             Label="History" />
+            <NavItem Href="ai"                      Icon="ForgeIcons.AutoAwesome"         Label="AI" />
+            <NavItem Href="administration"          Icon="ForgeIcons.Settings"            Label="Administration" />
+            <NavItem Href="advanced-trips"          Icon="ForgeIcons.DirectionsBus"       Label="Advanced Trips" />
+            <NavItem Href="avl"                     Icon="ForgeIcons.LocationOn"          Label="AVL" />
+            <NavItem Href="contract-billing"        Icon="ForgeIcons.Receipt"             Label="Contract Billing" />
+            <NavItem Href="advanced-fleet"          Icon="ForgeIcons.Build"               Label="Advanced Fleet Maintenance" />
+            <NavItem Href="arrival-board"           Icon="ForgeIcons.ViewList"            Label="Arrival Board" />
+            <NavItem Href="map"                     Icon="ForgeIcons.Map"                 Label="Map" />
+            <NavItem Href="planning"                Icon="ForgeIcons.EventNote"           Label="Planning" />
+            <NavItem Href="resources"               Icon="ForgeIcons.PeopleAlt"           Label="Resources" />
+            <NavItem Href="rollout"                 Icon="ForgeIcons.PlayArrow"           Label="Rollout" />
+            <NavItem Href="advanced-routing"        Icon="ForgeIcons.Route"               Label="Advanced Routing" />
+            <NavItem Href="run-collector"           Icon="ForgeIcons.FolderOpen"          Label="Run Collector" />
+            <NavItem Href="students"                Icon="ForgeIcons.School"              Label="Students" />
+            <NavItem Href="training"                Icon="ForgeIcons.MenuBook"            Label="Training" />
+
+            @* Tyler Drive — expands to show sub-pages *@
+            <forge-expansion-panel open="@(_isTylerDriveActive ? "" : null)">
+                <div slot="header" style="display:flex;align-items:center;gap:8px;padding:4px 0">
+                    <ForgeIcon Icon="ForgeIcons.PhoneAndroid" />
+                    <span>Tyler Drive</span>
+                </div>
+                <NavItem Href="tyler-drive/home"        Icon="ForgeIcons.Home"        Label="Home" />
+                <NavItem Href="tyler-drive/setup"       Icon="ForgeIcons.Settings"    Label="Setup" />
+                <NavItem Href="tyler-drive/messaging"   Icon="ForgeIcons.ChatBubble"  Label="Messaging" />
+                <NavItem Href="tyler-drive/break-time"  Icon="ForgeIcons.Timer"       Label="Break Time" />
+                <NavItem Href="tyler-drive/timekeeping" Icon="ForgeIcons.AccessTime"  Label="Timekeeping" />
+                <NavItem Href="tyler-drive/inspections" Icon="ForgeIcons.CheckCircle" Label="Inspections" />
+                <NavItem Href="tyler-drive/reports"     Icon="ForgeIcons.BarChart"    Label="Reports" />
+            </forge-expansion-panel>
+
+            <NavItem Href="tyler-bus-attendance"    Icon="ForgeIcons.DirectionsBus"  Label="Tyler Bus Attendance" />
+            <NavItem Href="reports"                 Icon="ForgeIcons.Assessment"     Label="Reports" />
+        </forge-list>
+    </Navigation>
     <ChildContent>
         <main id="main-content" class="p-medium">
             @Body
@@ -17,24 +56,8 @@
 </StxAppLayout>
 
 @code {
-    private readonly IReadOnlyList<StxNavGroup> _navGroups =
-    [
-        new()
-        {
-            Label = "Tyler Drive",
-            Icon  = ForgeIcons.PhoneAndroid,
-            Items =
-            [
-                new() { Text = "Home",        Href = "tyler-drive/home",        Icon = ForgeIcons.Home },
-                new() { Text = "Setup",       Href = "tyler-drive/setup",       Icon = ForgeIcons.Settings },
-                new() { Text = "Messaging",   Href = "tyler-drive/messaging",   Icon = ForgeIcons.ChatBubble },
-                new() { Text = "Break Time",  Href = "tyler-drive/break-time",  Icon = ForgeIcons.Timer },
-                new() { Text = "Timekeeping", Href = "tyler-drive/timekeeping", Icon = ForgeIcons.AccessTime },
-                new() { Text = "Inspections", Href = "tyler-drive/inspections", Icon = ForgeIcons.CheckCircle },
-                new() { Text = "Reports",     Href = "tyler-drive/reports",     Icon = ForgeIcons.BarChart },
-            ]
-        }
-    ];
+    private bool _isTylerDriveActive =>
+        Nav.ToBaseRelativePath(Nav.Uri).StartsWith("tyler-drive", StringComparison.OrdinalIgnoreCase);
 
     private readonly IReadOnlyList<StxAppBarButton> _appBarButtons =
     [

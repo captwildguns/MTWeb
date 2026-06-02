@@ -1,0 +1,24 @@
+@inject NavigationManager Nav
+
+<forge-list-item data-stx-nav-item
+                 data-stx-href="@Href"
+                 data-stx-active="@(IsActive ? "" : null)">
+    <ForgeIcon Icon="@Icon" Slot="Slots.Start" />
+    <a href="@Href" class="stx-nav-item__link">@Label</a>
+</forge-list-item>
+
+@code {
+    [Parameter] public string Href { get; set; } = string.Empty;
+    [Parameter] public ForgeIcons Icon { get; set; }
+    [Parameter] public string Label { get; set; } = string.Empty;
+
+    private bool IsActive
+    {
+        get
+        {
+            var current = "/" + Nav.ToBaseRelativePath(Nav.Uri).Split('?')[0].TrimEnd('/');
+            var target = "/" + Href.TrimEnd('/');
+            return string.Equals(current, target, StringComparison.OrdinalIgnoreCase);
+        }
+    }
+}
