@@ -1,9 +1,10 @@
 ﻿<ForgeForm @ref="_form" Model="_model">
     <div class="field-row">
         <label>Map Updates</label>
-        <ForgeRadioGroup Value="@ED(_model.MapUpdatesEnabled)" ValueChanged="@((string v) => _model.MapUpdatesEnabled = v == "Enabled")">
-            <ForgeRadio Value="Enabled">Enabled</ForgeRadio><ForgeRadio Value="Disabled">Disabled</ForgeRadio>
-        </ForgeRadioGroup>
+        <span style="display:flex;gap:16px">
+            <ForgeRadio Value="@ED(_model.MapUpdatesEnabled)" ValueChanged="@((string v) => _model.MapUpdatesEnabled = v == "Enabled")" RadioValue="Enabled" Name="mapUpdates">Enabled</ForgeRadio>
+            <ForgeRadio Value="@ED(_model.MapUpdatesEnabled)" ValueChanged="@((string v) => _model.MapUpdatesEnabled = v == "Enabled")" RadioValue="Disabled" Name="mapUpdates">Disabled</ForgeRadio>
+        </span>
     </div>
     <div class="field-row">
         <label>Login Type</label>
@@ -17,9 +18,10 @@
     </div>
     <div class="field-row">
         <label>Auto Logout</label>
-        <ForgeRadioGroup Value="@ED(_model.AutoLogoutEnabled)" ValueChanged="@((string v) => _model.AutoLogoutEnabled = v == "Enabled")">
-            <ForgeRadio Value="Enabled">Enabled</ForgeRadio><ForgeRadio Value="Disabled">Disabled</ForgeRadio>
-        </ForgeRadioGroup>
+        <span style="display:flex;gap:16px">
+            <ForgeRadio Value="@ED(_model.AutoLogoutEnabled)" ValueChanged="@((string v) => _model.AutoLogoutEnabled = v == "Enabled")" RadioValue="Enabled" Name="autoLogout">Enabled</ForgeRadio>
+            <ForgeRadio Value="@ED(_model.AutoLogoutEnabled)" ValueChanged="@((string v) => _model.AutoLogoutEnabled = v == "Enabled")" RadioValue="Disabled" Name="autoLogout">Disabled</ForgeRadio>
+        </span>
     </div>
     @if (_model.AutoLogoutEnabled)
     {

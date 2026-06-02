@@ -1,15 +1,18 @@
 ﻿<ForgeForm @ref="_form" Model="_model">
     <div class="field-row">
         <label>Timekeeping</label>
-        <ForgeRadioGroup @bind-Value="_timekeeping">
-            <ForgeRadio Value="Enabled">Enabled</ForgeRadio>
-            <ForgeRadio Value="Disabled">Disabled</ForgeRadio>
-        </ForgeRadioGroup>
+        <span style="display:flex;gap:16px">
+            <ForgeRadio Value="@ED(_model.TimekeepingEnabled)" ValueChanged="@((string v) => _model.TimekeepingEnabled = v == "Enabled")" RadioValue="Enabled" Name="timekeeping">Enabled</ForgeRadio>
+            <ForgeRadio Value="@ED(_model.TimekeepingEnabled)" ValueChanged="@((string v) => _model.TimekeepingEnabled = v == "Enabled")" RadioValue="Disabled" Name="timekeeping">Disabled</ForgeRadio>
+        </span>
     </div>
     @if (_model.TimekeepingEnabled)
     {
         <div class="field-row-indent" style="padding-top:4px">
-            <ForgeCheckbox @bind-Value="_model.MandatoryPunchIn">Mandatory Punch In</ForgeCheckbox>
+            <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
+                <ForgeCheckbox @bind-Value="_model.MandatoryPunchIn" />
+                <span>Mandatory Punch In</span>
+            </label>
         </div>
         <div class="field-row field-row-indent">
             <label>Clock In Buffer</label>
@@ -35,22 +38,9 @@
     }
     <div class="setup-actions"><StxButton Intent="StxButtonIntent.Save" OnClick="HandleSave" /></div>
 </ForgeForm>
-
 @code {
-    private readonly TimeTrackingSetupModel _model = new()
-    {
-        TimekeepingEnabled = true,
-        ClockInBufferMinutes = 15,
-        ClockOutBufferMinutes = 15,
-        BreakTime = "Off"
-    };
+    private readonly TimeTrackingSetupModel _model = new() { TimekeepingEnabled = true, ClockInBufferMinutes = 15, ClockOutBufferMinutes = 15 };
     private ForgeForm? _form;
-
-    private string _timekeeping
-    {
-        get => _model.TimekeepingEnabled ? "Enabled" : "Disabled";
-        set => _model.TimekeepingEnabled = value == "Enabled";
-    }
-
+    private static string ED(bool v) => v ? "Enabled" : "Disabled";
     private async Task HandleSave() { await Task.CompletedTask; }
 }

@@ -1,51 +1,43 @@
 ﻿<ForgeForm @ref="_form" Model="_model">
     <div class="field-row">
         <label>Field Inspections</label>
-        <ForgeRadioGroup Value="@ED(_model.FieldInspectionsEnabled)" ValueChanged="@((string v) => _model.FieldInspectionsEnabled = v == "Enabled")">
-            <ForgeRadio Value="Enabled">Enabled</ForgeRadio><ForgeRadio Value="Disabled">Disabled</ForgeRadio>
-        </ForgeRadioGroup>
+        <span style="display:flex;gap:16px">
+            <ForgeRadio Value="@ED(_model.FieldInspectionsEnabled)" ValueChanged="@((string v) => _model.FieldInspectionsEnabled = v == "Enabled")" RadioValue="Enabled" Name="fieldInsp">Enabled</ForgeRadio>
+            <ForgeRadio Value="@ED(_model.FieldInspectionsEnabled)" ValueChanged="@((string v) => _model.FieldInspectionsEnabled = v == "Enabled")" RadioValue="Disabled" Name="fieldInsp">Disabled</ForgeRadio>
+        </span>
     </div>
     @if (_model.FieldInspectionsEnabled)
     {
-        <div class="field-row field-row-indent"><ForgeCheckbox @bind-Value="_model.SignatureOnFail">Signature On Fail</ForgeCheckbox></div>
-        <div class="field-row field-row-indent"><ForgeCheckbox @bind-Value="_model.SignatureOnPass">Signature On Pass</ForgeCheckbox></div>
-        <div class="field-row field-row-indent"><ForgeCheckbox @bind-Value="_model.UpdateOdometer">Update Odometer</ForgeCheckbox></div>
-        <div class="field-row field-row-indent"><ForgeCheckbox @bind-Value="_model.SingleDefectSelection">Single Defect Selection</ForgeCheckbox></div>
-        <div class="field-row field-row-indent"><ForgeCheckbox @bind-Value="_model.EnableWorkOrderVerification">Enable Work Order Verification</ForgeCheckbox></div>
-        <div class="field-row field-row-indent"><ForgeCheckbox @bind-Value="_model.HideVehiclesWithOpenWorkOrders">Hide Vehicles With Open Work Orders</ForgeCheckbox></div>
+        <div class="field-row field-row-indent"><label style="display:flex;align-items:center;gap:8px;cursor:pointer"><ForgeCheckbox @bind-Value="_model.SignatureOnFail" /><span>Signature On Fail</span></label></div>
+        <div class="field-row field-row-indent"><label style="display:flex;align-items:center;gap:8px;cursor:pointer"><ForgeCheckbox @bind-Value="_model.SignatureOnPass" /><span>Signature On Pass</span></label></div>
+        <div class="field-row field-row-indent"><label style="display:flex;align-items:center;gap:8px;cursor:pointer"><ForgeCheckbox @bind-Value="_model.UpdateOdometer" /><span>Update Odometer</span></label></div>
+        <div class="field-row field-row-indent"><label style="display:flex;align-items:center;gap:8px;cursor:pointer"><ForgeCheckbox @bind-Value="_model.SingleDefectSelection" /><span>Single Defect Selection</span></label></div>
+        <div class="field-row field-row-indent"><label style="display:flex;align-items:center;gap:8px;cursor:pointer"><ForgeCheckbox @bind-Value="_model.EnableWorkOrderVerification" /><span>Enable Work Order Verification</span></label></div>
+        <div class="field-row field-row-indent"><label style="display:flex;align-items:center;gap:8px;cursor:pointer"><ForgeCheckbox @bind-Value="_model.HideVehiclesWithOpenWorkOrders" /><span>Hide Vehicles With Open Work Orders</span></label></div>
     }
     <div class="field-row">
         <label>Notes On Fail</label>
         <ForgeSelect @bind-Value="_model.NotesOnFail" FloatLabelType="FloatLabelType.Never" style="width:160px">
-            <ForgeSelectOption Value="@("Off")">Off</ForgeSelectOption>
-            <ForgeSelectOption Value="@("Prompt")">Prompt</ForgeSelectOption>
-            <ForgeSelectOption Value="@("Require")">Require</ForgeSelectOption>
+            <ForgeSelectOption Value="@("Off")">Off</ForgeSelectOption><ForgeSelectOption Value="@("Prompt")">Prompt</ForgeSelectOption><ForgeSelectOption Value="@("Require")">Require</ForgeSelectOption>
         </ForgeSelect>
     </div>
     <div class="field-row">
         <label>Notes On Critical</label>
         <ForgeSelect @bind-Value="_model.NotesOnCritical" FloatLabelType="FloatLabelType.Never" style="width:160px">
-            <ForgeSelectOption Value="@("Off")">Off</ForgeSelectOption>
-            <ForgeSelectOption Value="@("Prompt")">Prompt</ForgeSelectOption>
-            <ForgeSelectOption Value="@("Require")">Require</ForgeSelectOption>
+            <ForgeSelectOption Value="@("Off")">Off</ForgeSelectOption><ForgeSelectOption Value="@("Prompt")">Prompt</ForgeSelectOption><ForgeSelectOption Value="@("Require")">Require</ForgeSelectOption>
         </ForgeSelect>
     </div>
     <div class="field-row">
         <label>Odometer Warning</label>
-        <ForgeRadioGroup Value="@ED(_model.OdometerWarningEnabled)" ValueChanged="@((string v) => _model.OdometerWarningEnabled = v == "Enabled")">
-            <ForgeRadio Value="Enabled">Enabled</ForgeRadio><ForgeRadio Value="Disabled">Disabled</ForgeRadio>
-        </ForgeRadioGroup>
+        <span style="display:flex;gap:16px">
+            <ForgeRadio Value="@ED(_model.OdometerWarningEnabled)" ValueChanged="@((string v) => _model.OdometerWarningEnabled = v == "Enabled")" RadioValue="Enabled" Name="odoWarn">Enabled</ForgeRadio>
+            <ForgeRadio Value="@ED(_model.OdometerWarningEnabled)" ValueChanged="@((string v) => _model.OdometerWarningEnabled = v == "Enabled")" RadioValue="Disabled" Name="odoWarn">Disabled</ForgeRadio>
+        </span>
     </div>
     @if (_model.OdometerWarningEnabled)
     {
-        <div class="field-row field-row-indent">
-            <label>Warning Threshold</label>
-            <span style="display:flex;align-items:center;gap:8px"><ForgeNumberField @bind-Value="_model.OdometerWarningThreshold" FloatLabelType="FloatLabelType.Never" Min="0" Max="100" style="width:80px" /><span>%</span></span>
-        </div>
-        <div class="field-row field-row-indent">
-            <label>Minimum Units</label>
-            <ForgeNumberField @bind-Value="_model.OdometerWarningMinimumUnits" FloatLabelType="FloatLabelType.Never" Min="0" style="width:80px" />
-        </div>
+        <div class="field-row field-row-indent"><label>Warning Threshold</label><span style="display:flex;align-items:center;gap:8px"><ForgeNumberField @bind-Value="_model.OdometerWarningThreshold" FloatLabelType="FloatLabelType.Never" Min="0" Max="100" style="width:80px" /><span>%</span></span></div>
+        <div class="field-row field-row-indent"><label>Minimum Units</label><ForgeNumberField @bind-Value="_model.OdometerWarningMinimumUnits" FloatLabelType="FloatLabelType.Never" Min="0" style="width:80px" /></div>
     }
     <div class="setup-actions"><StxButton Intent="StxButtonIntent.Save" OnClick="HandleSave" /></div>
 </ForgeForm>
