@@ -3,8 +3,20 @@
     @if (_model.TimekeepingEnabled)
     {
         <div class="field-row-indent" style="padding-top:4px"><ForgeCheckbox @bind-Value="_model.MandatoryPunchIn" Label="Mandatory Punch In" /></div>
-        <div class="field-row field-row-indent"><label>Clock In Buffer</label><span style="display:flex;align-items:center;gap:8px"><ForgeNumberField @bind-Value="_model.ClockInBufferMinutes" FloatLabelType="FloatLabelType.Never" Min="0" style="width:80px" /><span>minutes</span></span></div>
-        <div class="field-row field-row-indent"><label>Clock Out Buffer</label><span style="display:flex;align-items:center;gap:8px"><ForgeNumberField @bind-Value="_model.ClockOutBufferMinutes" FloatLabelType="FloatLabelType.Never" Min="0" style="width:80px" /><span>minutes</span></span></div>
+        <div class="field-row field-row-indent">
+            <label>Clock In Buffer</label>
+            <span style="display:flex;align-items:center;gap:8px">
+                <ForgeNumberField @bind-Value="_model.ClockInBufferMinutes" FloatLabelType="FloatLabelType.Never" Min="0" style="width:80px" />
+                <span>minutes</span>
+            </span>
+        </div>
+        <div class="field-row field-row-indent">
+            <label>Clock Out Buffer</label>
+            <span style="display:flex;align-items:center;gap:8px">
+                <ForgeNumberField @bind-Value="_model.ClockOutBufferMinutes" FloatLabelType="FloatLabelType.Never" Min="0" style="width:80px" />
+                <span>minutes</span>
+            </span>
+        </div>
         <div class="field-row field-row-indent">
             <label>Break Time</label>
             <ForgeSelect @bind-Value="_model.BreakTime" FloatLabelType="FloatLabelType.Never" style="width:160px">
@@ -17,7 +29,13 @@
 </ForgeForm>
 
 @code {
-    private readonly TimeTrackingSetupModel _model = new();
+    private readonly TimeTrackingSetupModel _model = new()
+    {
+        TimekeepingEnabled = true,
+        ClockInBufferMinutes = 15,
+        ClockOutBufferMinutes = 15,
+        BreakTime = "Off"
+    };
     private ForgeForm? _form;
     private async Task HandleSave() { await Task.CompletedTask; }
 }
