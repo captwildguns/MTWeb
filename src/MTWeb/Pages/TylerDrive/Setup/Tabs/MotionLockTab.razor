@@ -1,4 +1,4 @@
-﻿@using MTWeb.Pages.TylerDrive.Setup.Tabs
+@using MTWeb.Pages.TylerDrive.Setup.Tabs
 
 <ForgeForm @ref="_form" Model="_model">
     <div class="setup-section">
@@ -27,51 +27,36 @@
     <div class="setup-section">
         <ForgeText Typography="Typography.Heading6" class="mb-small">Display Elements</ForgeText>
 
-        <div class="field-row"><label>Clock</label><ForgeSwitch @bind-Value="_model.ShowClock" Label="Show" /></div>
-        <div class="field-row"><label>Date</label><ForgeSwitch @bind-Value="_model.ShowDate" Label="Show" /></div>
-        <div class="field-row"><label>Next Direction</label><ForgeSwitch @bind-Value="_model.ShowNextDirection" Label="Show" /></div>
-        <div class="field-row"><label>Next Direction Arrow</label><ForgeSwitch @bind-Value="_model.ShowNextDirectionArrow" Label="Show" /></div>
-        <div class="field-row"><label>Next Direction Distance</label><ForgeSwitch @bind-Value="_model.ShowNextDirectionDistance" Label="Show" /></div>
-        <div class="field-row"><label>Next Stop Time</label><ForgeSwitch @bind-Value="_model.ShowNextStopTime" Label="Show" /></div>
-        <div class="field-row"><label>Next Stop Address</label><ForgeSwitch @bind-Value="_model.ShowNextStopAddress" Label="Show" /></div>
-        <div class="field-row"><label>Next Stop Pickup / Dropoff</label><ForgeSwitch @bind-Value="_model.ShowNextStopPickupDropoff" Label="Show" /></div>
-        <div class="field-row"><label>Students on Bus</label><ForgeSwitch @bind-Value="_model.ShowStudentsOnBus" Label="Show" /></div>
-        <div class="field-row"><label>Student Scans</label><ForgeSwitch @bind-Value="_model.ShowStudentScans" Label="Show" /></div>
+        <div class="field-row"><label style="display:flex;align-items:center;gap:8px;cursor:pointer"><ForgeCheckbox @bind-Value="_model.ShowClock" /><span>Clock</span></label></div>
+        <div class="field-row"><label style="display:flex;align-items:center;gap:8px;cursor:pointer"><ForgeCheckbox @bind-Value="_model.ShowDate" /><span>Date</span></label></div>
+        <div class="field-row"><label style="display:flex;align-items:center;gap:8px;cursor:pointer"><ForgeCheckbox @bind-Value="_model.ShowNextDirection" /><span>Next Direction</span></label></div>
+        <div class="field-row"><label style="display:flex;align-items:center;gap:8px;cursor:pointer"><ForgeCheckbox @bind-Value="_model.ShowNextDirectionArrow" /><span>Next Direction Arrow</span></label></div>
+        <div class="field-row"><label style="display:flex;align-items:center;gap:8px;cursor:pointer"><ForgeCheckbox @bind-Value="_model.ShowNextDirectionDistance" /><span>Next Direction Distance</span></label></div>
+        <div class="field-row"><label style="display:flex;align-items:center;gap:8px;cursor:pointer"><ForgeCheckbox @bind-Value="_model.ShowNextStopTime" /><span>Next Stop Time</span></label></div>
+        <div class="field-row"><label style="display:flex;align-items:center;gap:8px;cursor:pointer"><ForgeCheckbox @bind-Value="_model.ShowNextStopAddress" /><span>Next Stop Address</span></label></div>
+        <div class="field-row"><label style="display:flex;align-items:center;gap:8px;cursor:pointer"><ForgeCheckbox @bind-Value="_model.ShowNextStopPickupDropoff" /><span>Next Stop Pickup / Dropoff</span></label></div>
+        <div class="field-row"><label style="display:flex;align-items:center;gap:8px;cursor:pointer"><ForgeCheckbox @bind-Value="_model.ShowStudentsOnBus" /><span>Students on Bus</span></label></div>
+        <div class="field-row"><label style="display:flex;align-items:center;gap:8px;cursor:pointer"><ForgeCheckbox @bind-Value="_model.ShowStudentScans" /><span>Student Scans</span></label></div>
 
         @if (_model.ShowStudentScans)
         {
-            <div class="field-row">
-                <label>Student Scan Audible Alert</label>
-                <ForgeSwitch @bind-Value="_model.StudentScanAudibleAlert" Label="Enable" />
-            </div>
+            <div class="field-row field-row-indent"><label style="display:flex;align-items:center;gap:8px;cursor:pointer"><ForgeCheckbox @bind-Value="_model.StudentScanAudibleAlert" /><span>Student Scan Audible Alert</span></label></div>
         }
     </div>
 
     <div class="setup-section">
         <ForgeText Typography="Typography.Heading6" class="mb-small">Navigation Features</ForgeText>
 
-        <div class="field-row">
-            <label>Audible Directions</label>
-            <ForgeSwitch @bind-Value="_model.AudibleDirections" Label="Enable" />
-        </div>
-        <div class="field-row">
-            <label>Early Disengage</label>
-            <ForgeSwitch @bind-Value="_model.EarlyDisengage" Label="Enable" />
-        </div>
+        <div class="field-row"><label style="display:flex;align-items:center;gap:8px;cursor:pointer"><ForgeCheckbox @bind-Value="_model.AudibleDirections" /><span>Audible Directions</span></label></div>
+        <div class="field-row"><label style="display:flex;align-items:center;gap:8px;cursor:pointer"><ForgeCheckbox @bind-Value="_model.EarlyDisengage" /><span>Early Disengage</span></label></div>
 
         @if (_model.EarlyDisengage)
         {
-            <div class="field-row">
+            <div class="field-row field-row-indent">
                 <label>Early Disengage Distance (ft)</label>
-                <ForgeNumberField @bind-Value="_model.EarlyDisengageDistance"
-                                  Label="Feet"
-                                  Min="0"
-                                  FloatLabelType="FloatLabelType.Always" />
+                <ForgeNumberField @bind-Value="_model.EarlyDisengageDistance" FloatLabelType="FloatLabelType.Never" Min="0" style="width:80px" />
             </div>
-            <div class="field-row">
-                <label>Keep Early Disengage Off</label>
-                <ForgeSwitch @bind-Value="_model.EarlyDisengageKeepOff" Label="Keep Off" />
-            </div>
+            <div class="field-row field-row-indent"><label style="display:flex;align-items:center;gap:8px;cursor:pointer"><ForgeCheckbox @bind-Value="_model.EarlyDisengageKeepOff" /><span>Keep Early Disengage Off</span></label></div>
         }
     </div>
 
@@ -90,7 +75,3 @@
         await Task.CompletedTask;
     }
 }
-
-
-
-

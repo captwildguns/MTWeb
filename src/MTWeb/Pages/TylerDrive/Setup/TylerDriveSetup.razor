@@ -2,31 +2,39 @@
 
 <PageTitle>Tyler Drive Setup</PageTitle>
 
-<ForgeText Typography="Typography.Heading4" class="mb-medium">Tyler Drive Setup</ForgeText>
-
-<ForgeTabBar @bind-ActiveTab="_activeTab" Clustered="true">
-    <ForgeTab>General</ForgeTab>
-    <ForgeTab>Inspections</ForgeTab>
-    <ForgeTab>Messaging</ForgeTab>
-    <ForgeTab>Motion Lock</ForgeTab>
-    <ForgeTab>Navigation</ForgeTab>
-    <ForgeTab>ALK Copilot</ForgeTab>
-    <ForgeTab>Student Ridership</ForgeTab>
-    <ForgeTab>Timekeeping</ForgeTab>
-</ForgeTabBar>
+<StxToolbar>
+    <StartSlot>
+        <ForgeText Typography="Typography.Heading4">Tyler Drive Setup</ForgeText>
+    </StartSlot>
+</StxToolbar>
 
 <div class="setup-page">
-    @switch (_activeTab)
-    {
-        case 0: <GeneralTab /> break;
-        case 1: <InspectionsTab /> break;
-        case 2: <MessagingTab /> break;
-        case 3: <MotionLockTab /> break;
-        case 4: <NavigationTab /> break;
-        case 5: <AlkTab /> break;
-        case 6: <RidershipTab /> break;
-        case 7: <TimeTrackingTab /> break;
-    }
+    <ForgeTabBar @bind-ActiveTab="_activeTab" Clustered="true">
+        <ForgeTab>General</ForgeTab>
+        <ForgeTab>Inspections</ForgeTab>
+        <ForgeTab>Messaging</ForgeTab>
+        <ForgeTab>Motion Lock</ForgeTab>
+        <ForgeTab>Navigation</ForgeTab>
+        <ForgeTab>ALK Copilot</ForgeTab>
+        <ForgeTab>Student Ridership</ForgeTab>
+        <ForgeTab>Timekeeping</ForgeTab>
+    </ForgeTabBar>
+
+    <div class="setup-card">
+        <ForgeCard>
+            @switch (_activeTab)
+            {
+                case 0: <GeneralTab /> break;
+                case 1: <InspectionsTab /> break;
+                case 2: <MessagingTab /> break;
+                case 3: <MotionLockTab /> break;
+                case 4: <NavigationTab /> break;
+                case 5: <AlkTab /> break;
+                case 6: <RidershipTab /> break;
+                case 7: <TimeTrackingTab /> break;
+            }
+        </ForgeCard>
+    </div>
 </div>
 
 @code {

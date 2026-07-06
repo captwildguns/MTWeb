@@ -22,29 +22,37 @@
     max-width: 900px;
 }
 
+.setup-card {
+    display: block;
+    margin-top: var(--forge-spacing-medium);
+}
+
 .setup-section {
     margin-bottom: var(--forge-spacing-large);
 }
 
 .setup-actions {
     display: flex;
+    justify-content: flex-end;
     gap: var(--forge-spacing-small);
     padding-top: var(--forge-spacing-medium);
     border-top: 1px solid var(--forge-theme-border-low);
     margin-top: var(--forge-spacing-medium);
 }
 
+/* Block-start label positioning: label sits above its control. */
 .field-row {
-    display: grid;
-    grid-template-columns: 280px 1fr;
-    align-items: center;
-    gap: var(--forge-spacing-medium);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--forge-spacing-xxsmall, 4px);
     padding: var(--forge-spacing-small) 0;
 }
 
 .field-row label {
     font: var(--forge-typography-body2);
     color: var(--forge-theme-text-medium);
+    margin-bottom: 2px;
 }
 
 .field-row-indent {

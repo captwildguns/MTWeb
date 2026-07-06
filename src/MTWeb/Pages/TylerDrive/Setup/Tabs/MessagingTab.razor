@@ -1,4 +1,4 @@
-﻿<ForgeForm @ref="_form" Model="_model">
+<ForgeForm @ref="_form" Model="_model">
     <div class="field-row">
         <label>Messaging</label>
         <ForgeSelect @bind-Value="_model.MessagingMode" FloatLabelType="FloatLabelType.Never" style="width:160px">
@@ -19,45 +19,94 @@
             </span>
         </div>
         <div style="padding:6px 0 2px"><span>Response Types</span></div>
-        <div class="field-row-indent"><ForgeCheckbox @bind-Value="_model.AllowKeyboard">Keyboard</ForgeCheckbox></div>
-        <div class="field-row-indent"><ForgeCheckbox @bind-Value="_model.AllowCanned">Canned</ForgeCheckbox></div>
+        <div class="field-row-indent"><label style="display:flex;align-items:center;gap:8px;cursor:pointer"><ForgeCheckbox @bind-Value="_model.AllowKeyboard" /><span>Keyboard</span></label></div>
+        <div class="field-row-indent"><label style="display:flex;align-items:center;gap:8px;cursor:pointer"><ForgeCheckbox @bind-Value="_model.AllowCanned" /><span>Canned</span></label></div>
         @if (_model.AllowCanned)
         {
-            <div style="display:flex;align-items:center;gap:6px;padding:8px 0 4px 40px;cursor:pointer" @onclick="AddCannedResponse" role="button">
-                <forge-icon-button aria-label="Add"><ForgeIcon Icon="ForgeIcons.Add" /></forge-icon-button>
-                <span>Add a Canned Response</span>
-            </div>
-            @if (_model.CannedResponses.Count > 0)
-            {
-                <div style="padding-left:40px;max-width:480px">
-                    <div style="display:grid;grid-template-columns:1fr auto;padding:4px 0;border-bottom:1px solid var(--forge-theme-border-low);margin-bottom:4px">
-                        <span>Response</span><span>Delete</span>
-                    </div>
+            <div style="padding:8px 0 4px 40px;max-width:520px">
+                <div class="mb-small">
+                    <StxButton Intent="StxButtonIntent.Add" Text="Add a canned response" OnClick="OpenAdd" />
+                </div>
+                @if (_model.CannedResponses.Count > 0)
+                {
                     @foreach (var (r, i) in _model.CannedResponses.Select((r, i) => (r, i)))
                     {
-                        <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">
-                            <ForgeTextField @bind-Value="r.Text" FloatLabelType="FloatLabelType.Never" style="flex:1" />
-                            @if (i > 0) { <forge-icon-button aria-label="Up" @onclick="() => MoveUp(i)"><ForgeIcon Icon="ForgeIcons.ArrowUpward" /></forge-icon-button> }
-                            @if (i < _model.CannedResponses.Count - 1) { <forge-icon-button aria-label="Down" @onclick="() => MoveDown(i)"><ForgeIcon Icon="ForgeIcons.ArrowDownward" /></forge-icon-button> }
-                            <forge-icon-button aria-label="Delete" @onclick="() => Delete(i)"><ForgeIcon Icon="ForgeIcons.Close" /></forge-icon-button>
+                        var idx = i;
+                        <div style="display:flex;align-items:center;gap:6px;padding:4px 0;border-bottom:1px solid var(--forge-theme-border-low)">
+                            <span style="flex:1">@r.Text</span>
+                            @if (idx > 0)
+                            {
+                                <StxIconButton Id="@($"cr-up-{r.Id}")" Icon="StxIcons.ChevronUp" AriaLabel="Move up" OnClick="@(() => MoveUp(idx))" />
+                                <StxTooltip Anchor="@($"cr-up-{r.Id}")" Text="Move up" />
+                            }
+                            @if (idx < _model.CannedResponses.Count - 1)
+                            {
+                                <StxIconButton Id="@($"cr-down-{r.Id}")" Icon="StxIcons.ChevronDown" AriaLabel="Move down" OnClick="@(() => MoveDown(idx))" />
+                                <StxTooltip Anchor="@($"cr-down-{r.Id}")" Text="Move down" />
+                            }
+                            <StxIconButton Id="@($"cr-edit-{r.Id}")" Icon="StxIcons.Edit" AriaLabel="Edit" OnClick="@(() => OpenEdit(idx))" />
+                            <StxTooltip Anchor="@($"cr-edit-{r.Id}")" Text="Edit" />
+                            <StxIconButton Id="@($"cr-del-{r.Id}")" Icon="StxIcons.TrashCanOutline" AriaLabel="Delete" OnClick="@(() => Delete(idx))" />
+                            <StxTooltip Anchor="@($"cr-del-{r.Id}")" Text="Delete" />
                         </div>
                     }
-                </div>
-            }
+                }
+            </div>
         }
     }
     <div class="setup-actions"><StxButton Intent="StxButtonIntent.Save" OnClick="HandleSave" /></div>
 </ForgeForm>
 
+<StxDialog @bind-Open="_dialogOpen" Title="@(_editingIndex is null ? "Add canned response" : "Edit canned response")">
+    <ChildContent>
+        <div class="field-row" style="min-width:340px">
+            <label>Response</label>
+            <ForgeTextField @bind-Value="_editText" FloatLabelType="FloatLabelType.Never" style="width:100%" />
+        </div>
+    </ChildContent>
+    <FooterContent>
+        <StxButton Intent="StxButtonIntent.Save" OnClick="SaveDialog" />
+    </FooterContent>
+</StxDialog>
+
 @code {
     private readonly MessagingSetupModel _model = new();
     private ForgeForm? _form;
     private int _nextId = 1;
-    private void AddCannedResponse() => _model.CannedResponses.Add(new CannedResponseModel { Id = _nextId++, Sequence = _model.CannedResponses.Count + 1 });
+
+    private bool _dialogOpen;
+    private int? _editingIndex;
+    private string _editText = string.Empty;
+
+    private void OpenAdd()
+    {
+        _editingIndex = null;
+        _editText = string.Empty;
+        _dialogOpen = true;
+    }
+
+    private void OpenEdit(int i)
+    {
+        _editingIndex = i;
+        _editText = _model.CannedResponses[i].Text;
+        _dialogOpen = true;
+    }
+
+    private void SaveDialog()
+    {
+        if (_editingIndex is int i)
+        {
+            _model.CannedResponses[i].Text = _editText;
+        }
+        else
+        {
+            _model.CannedResponses.Add(new CannedResponseModel { Id = _nextId++, Sequence = _model.CannedResponses.Count + 1, Text = _editText });
+        }
+        _dialogOpen = false;
+    }
+
     private void Delete(int i) => _model.CannedResponses.RemoveAt(i);
     private void MoveUp(int i) { if (i > 0) (_model.CannedResponses[i], _model.CannedResponses[i-1]) = (_model.CannedResponses[i-1], _model.CannedResponses[i]); }
     private void MoveDown(int i) { if (i < _model.CannedResponses.Count-1) (_model.CannedResponses[i], _model.CannedResponses[i+1]) = (_model.CannedResponses[i+1], _model.CannedResponses[i]); }
     private async Task HandleSave() { await Task.CompletedTask; }
 }
-
-
